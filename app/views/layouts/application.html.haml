@@ -26,44 +26,79 @@
             %span.icon-bar
             %span.icon-bar
           %a.brand(href="#")
-            Swaziland Conference of Churches - SMS Manager
+            SCC - SMS Manager
           .container.nav-collapse
             %ul.nav
               %li
-                %a{:href => '/path1'}
+                %a{:href => root_url}
                   %i.icon-home
                   Home
-              %li
-                %a{:href => '/path2'}
-                  %i.icon-envelope
-                  Bulk SMS
-              %li
-                %a{:href => '/path3'}
-                  %i.icon-star-empty
-                  Competitions
+              -if current_user.nil? == false
+                %li.dropdown
+                  %a{:href => "#", "data-toggle" => "dropdown"}
+                    %i.icon-envelope
+                    Bulk SMS
+                    %b.caret
+                    %ul.dropdown-menu
+                      %li
+                        %a{:href => '/path1'}
+                          %i.icon-user
+                          Manage Contacts
+                        %a{:href => '/path2'}
+                          %i.icon-th
+                          Manage Groups
+                        %a{:href => '/path3'}
+                          %i.icon-file
+                          Manage Templates
+                        %a{:href => '/path4'}
+                          %i.icon-envelope
+                          Send Bulk SMS
+                %li
+                  %a{:href => '/path3'}
+                    %i.icon-star-empty
+                    Competitions
 
-              %li
-                %a{:href => 'path5' }
-                  %i.icon-download-alt
-                  Devotional SMS
+                %li
+                  %a{:href => '/path5' }
+                    %i.icon-download-alt
+                    Devotional SMS
+
+                %li
+                  %a{:href => '/path6'}
+                    %i.icon-book
+                    Reports
+
+                %li.dropdown
+                  %a{:href => "#", "data-toggle" => "dropdown"}
+                    %i.icon-wrench
+                    Settings
+                    %b.caret
+                    %ul.dropdown-menu
+                      %li
+                        %a{:href => '/path7'}
+                          System Users
+                      %li
+                        %a{:href => '/path8'}
+                          System User Roles
+
+                %ul.pull-right.nav
+                  -if current_user.nil? == false
+                    %li
+                      %a{:href => destroy_user_session_path, "data-method" => :delete, :style => 'color: red'}
+                        %i.icon-off
+                        ="Logout #{current_user.first_name}"
 
 
     .container-fluid
 
       .row-fluid
-        .span3
-          .well.sidebar-nav
-            %ul.nav.nav-list
-              %li.nav-header Sidebar
-              %li= link_to "Link 1", "/path1"
-              %li= link_to "Link 2", "/path2"
-              %li= link_to "Link 3", "/path3"
-        .span9
-          = bootstrap_flash
-          = yield
+        = bootstrap_flash
+        = yield
     
-      %footer
-        %p &copy; Swaziland Conference of Churches 2013
+
+    %footer{:style => 'background-color: #f1f1f1; padding-bottom: 20px; padding-left: 10px;'}
+      %hr
+      %p &copy; SCC 2013. SMS Manager.
     /
       Javascripts
       \==================================================

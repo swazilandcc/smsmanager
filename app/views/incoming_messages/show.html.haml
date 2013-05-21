@@ -1,0 +1,39 @@
+%p#notice= notice
+
+%p
+  %b Sender:
+  = @incoming_message.sender
+%p
+  %b Keyword:
+  = @incoming_message.keyword
+%p
+  %b Option:
+  = @incoming_message.option
+%p
+  %b Extra text:
+  = @incoming_message.extra_text
+%p
+  %b Reply sent:
+  = @incoming_message.reply_sent
+%p
+  %b Reply sent date time:
+  = @incoming_message.reply_sent_date_time
+%p
+  %b Reply message:
+  = @incoming_message.reply_message
+%p
+  %b Matched to competition:
+  = @incoming_message.matched_to_competition
+%p
+  %b Matched to devotional:
+  = @incoming_message.matched_to_devotional
+%p
+  %b Devotional:
+  = @incoming_message.devotional_id
+%p
+  %b Competition:
+  = @incoming_message.competition_id
+
+= link_to 'Edit', edit_incoming_message_path(@incoming_message)
+\|
+= link_to 'Back', incoming_messages_path

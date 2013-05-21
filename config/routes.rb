@@ -1,4 +1,11 @@
 Smsmanager::Application.routes.draw do
+
+  match 'incoming_messages/receive' => 'incoming_messages#receive'
+  resources :incoming_messages
+
+
+  devise_for :users
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

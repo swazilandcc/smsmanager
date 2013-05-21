@@ -1,0 +1,20 @@
+%h1.text-info All Received Text Messages
+%br
+%table.table.table-bordered.table-stripped.table-condensed
+  %thead
+    %tr
+      %th Sender
+      %th Keyword
+      %th Option
+      %th Extra text
+
+  %tbody
+  - @incoming_messages.each do |incoming_message|
+    %tr
+      %td= incoming_message.sender
+      %td= incoming_message.keyword
+      %td= incoming_message.option
+      %td= incoming_message.extra_text
+      -#%td= link_to 'Show', incoming_message, :class => 'btn'
+      -#%td= link_to 'Edit', edit_incoming_message_path(incoming_message), :class => 'btn btn-primary'
+      -#%td= link_to 'Destroy', incoming_message, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn'

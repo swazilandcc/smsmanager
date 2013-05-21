@@ -16,6 +16,8 @@ gem 'thin'
 gem 'ransack'
 gem 'net-ping'
 gem 'twitter-bootstrap-rails'
+gem 'whenever'
+gem 'sidekiq'
 
 # Gems used only for assets and not required
 # in production environments by default.

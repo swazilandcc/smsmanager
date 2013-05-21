@@ -1,0 +1,18 @@
+= simple_form_for(@incoming_message) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :sender
+    = f.input :keyword
+    = f.input :option
+    = f.input :extra_text
+    = f.input :reply_sent
+    = f.input :reply_sent_date_time
+    = f.input :reply_message
+    = f.input :matched_to_competition
+    = f.input :matched_to_devotional
+    = f.input :devotional_id
+    = f.input :competition_id
+
+  .form-actions
+    = f.button :submit

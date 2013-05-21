@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  sender: MyString
+  keyword: MyString
+  option: MyString
+  extra_text: MyString
+  reply_sent: false
+  reply_sent_date_time: 2013-05-21 20:52:32
+  reply_message: MyString
+  matched_to_competition: false
+  matched_to_devotional: false
+  devotional_id: 1
+  competition_id: 1
+
+two:
+  sender: MyString
+  keyword: MyString
+  option: MyString
+  extra_text: MyString
+  reply_sent: false
+  reply_sent_date_time: 2013-05-21 20:52:32
+  reply_message: MyString
+  matched_to_competition: false
+  matched_to_devotional: false
+  devotional_id: 1
+  competition_id: 1
