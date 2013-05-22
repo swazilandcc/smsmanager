@@ -66,7 +66,7 @@ class IncomingMessagesController < ApplicationController
 
     end
 
-    render :text => "OK"
+    render :nothing => true
 
   end
 

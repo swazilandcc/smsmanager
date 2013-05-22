@@ -44,6 +44,8 @@ class SendBulkMessagesController < ApplicationController
 
     respond_to do |format|
       if @send_bulk_message.save
+        BulkSend.perform_async(@send_bulk_message.group_id, @send_bulk_message.message, current_user.id)
+
         format.html { redirect_to send_bulk_message_path, notice: 'Bulk Message successfully submitted for delivery!' }
         format.json { render json: @send_bulk_message, status: :created, location: @send_bulk_message }
       else
@@ -80,4 +82,18 @@ class SendBulkMessagesController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def getContacts
+
+    group_id = params[:groupID]
+
+    @contacts =  @contacts = Contact.all(:joins => "INNER JOIN contacts_groups ON contacts.id = contacts_groups.contact_id", :conditions => "contacts_groups.group_id = #{group_id}")
+
+    respond_to do |format|
+      format.json { render json: {:contacts => @contacts}}
+    end
+
+  end
+
+
 end

@@ -17,3 +17,24 @@ jQuery ->
       dataType: "json"
       contentType: "application/json"
 
+  $('#send_bulk_message_group_id').change ->
+    groupid = $(this).find(":selected").val();
+
+    #make ajax request to retrive all contacts in group
+    i = 0
+
+    jQuery.ajax
+      type: "POST"
+      url: "/send_bulk_messages/getContacts"
+      data: JSON.stringify({'groupID':groupid})
+      success:
+        (data) ->
+          $('#groupContacts').html("<b>Contacts Found In Group<br /></b>")
+          while i < data.contacts.length
+            console.log(data.contacts[i].first_name)
+            $('#groupContacts').append(data.contacts[i].first_name + " " + data.contacts[i].last_name + " -> " + data.contacts[i].cell_number + "<br />")
+            i++
+      dataType: "json"
+      contentType: "application/json"
+
+

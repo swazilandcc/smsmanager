@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130522050334) do
+ActiveRecord::Schema.define(:version => 20130522113419) do
 
   create_table "bulk_message_templates", :force => true do |t|
     t.string   "name"
@@ -69,6 +69,15 @@ ActiveRecord::Schema.define(:version => 20130522050334) do
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "sms_logs", :force => true do |t|
+    t.string   "cell_number"
+    t.string   "message"
+    t.string   "status"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "users", :force => true do |t|

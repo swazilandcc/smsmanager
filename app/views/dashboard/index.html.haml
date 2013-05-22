@@ -17,6 +17,18 @@
         %td # Message Templates
         %td
           %b=BulkMessageTemplate.count()
+    %br
+    %h4 Incoming SMS
+    %br
+    %table.table.table-bordered{:style => 'font-size: 12px;'}
+      %tr
+        %td # Today
+        %td=IncomingMessage.all(:conditions => "created_at BETWEEN '#{Time.now.strftime("%Y-%m-%d")} 00:00:00' AND '#{Time.now.strftime("%Y-%m-%d")} 23:59:59'").count()
+      %tr
+        %td # This Month
+        %td=IncomingMessage.all(:conditions => "created_at BETWEEN '#{Time.now.strftime("%Y-%m")}-01 00:00:00' AND '#{Time.now.strftime("%Y-%m")}-31 23:59:59'").count()
+
     %h4.text-success Competitions
     %br
+
 

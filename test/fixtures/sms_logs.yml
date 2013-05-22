@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  cell_number: MyString
+  message: MyString
+  status: MyString
+  user_id: 1
+
+two:
+  cell_number: MyString
+  message: MyString
+  status: MyString
+  user_id: 1

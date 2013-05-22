@@ -19,6 +19,8 @@ gem 'twitter-bootstrap-rails'
 gem 'whenever'
 gem 'sidekiq'
 gem 'chosen-rails'
+gem 'sinatra', require: false
+gem 'slim'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -1,6 +1,18 @@
+require 'sidekiq/web'
+
 Smsmanager::Application.routes.draw do
 
+  authenticate :user do
+
+    mount Sidekiq::Web, at: "/sidekiq"
+
+  end
+
+
+  resources :sms_logs
+
   match "/bulk_message_templates/getMessage" => "bulk_message_templates#getMessage"
+  match "/send_bulk_messages/getContacts" => "send_bulk_messages#getContacts"
 
   resources :send_bulk_messages
 

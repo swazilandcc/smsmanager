@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Cell number:
+  = @sms_log.cell_number
+%p
+  %b Message:
+  = @sms_log.message
+%p
+  %b Status:
+  = @sms_log.status
+%p
+  %b User:
+  = @sms_log.user_id
+
+= link_to 'Edit', edit_sms_log_path(@sms_log)
+\|
+= link_to 'Back', sms_logs_path

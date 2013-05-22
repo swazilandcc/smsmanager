@@ -18,7 +18,7 @@ server "swazilandcc-sms-manager.sytes.net", :web, :app, :db, primary: true
 #set :whenever_environment, "production"
 
 #require "whenever/capistrano"
-#require 'sidekiq/capistrano'
+require 'sidekiq/capistrano'
 
 #set :sidekiq_cmd, "#{bundle_cmd} exec sidekiq"
 #set :sidekiqctl_cmd, "#{bundle_cmd} exec sidekiqctl"
