@@ -1,0 +1,9 @@
+%h1.text-info=@bulk_message_template.name
+.well
+  %p
+    %b Message:
+    = @bulk_message_template.message
+
+.form-actions
+  = link_to 'Edit', edit_bulk_message_template_path(@bulk_message_template), :class => 'btn btn-primary'
+  = link_to 'Back', bulk_message_templates_path, :class => 'btn'

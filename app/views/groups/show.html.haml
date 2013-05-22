@@ -1,0 +1,17 @@
+.well
+  %h1=@group.name
+.well
+  %p
+    %b Total Number of Members:
+    =ContactsGroup.find_all_by_group_id(@group.id).count
+    %br
+    %br
+    %b Members:
+    %ul
+    -ContactsGroup.find_all_by_group_id(@group.id).each do |y|
+      -if y.contact.nil? == false
+        %li=y.contact.full_name
+.form-actions
+  = link_to 'Edit', edit_group_path(@group), :class => 'btn btn-success'
+  = link_to 'Back', groups_path, :class => 'btn'
+

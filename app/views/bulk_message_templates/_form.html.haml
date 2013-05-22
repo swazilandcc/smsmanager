@@ -1,0 +1,25 @@
+= simple_form_for(@bulk_message_template, :html => {:class => "form-horizontal"}, :validate => true) do |f|
+  = f.error_notification
+  %br
+    .alert.alert-success
+      %br
+      You can create dynamic message templates with the following values:
+      %br
+      %b
+        %ul
+          %li [title]
+          %li [first_name]
+          %li [last_name]
+          %li [cell_number]
+      %br
+      This will auto replace the above values when sending Bulk SMS from stored values in the database.
+      %br
+
+  .form-inputs
+    = f.input :name
+    = f.input :message, :input_html => {:cols => 4, :rows => 6, :maxlength => 160}
+
+  .form-actions
+    = f.button :submit, :class => 'btn btn-success'
+    = link_to 'Back', bulk_message_templates_path, :class => 'btn'
+

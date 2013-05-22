@@ -1,0 +1,11 @@
+= simple_form_for(@group, :html => {:class => "form-horizontal"}, :validate => true) do |f|
+  = f.error_notification
+
+  .form-inputs
+    = f.input :name
+    = f.input :description, :input_html => {:cols => 3, :rows => 3}
+
+  .form-actions
+    = f.button :submit, :class => 'btn btn-success'
+    = link_to 'Back', groups_path, :class => 'btn'
+

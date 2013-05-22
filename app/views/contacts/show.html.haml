@@ -1,0 +1,18 @@
+%h3.text-info="#{@contact.title} #{@contact.first_name} #{@contact.last_name}"
+%br
+.well
+  %h4.label.label-info Contact Details
+  %p
+    %ul
+      %li
+        Cell Number:
+        = @contact.cell_number
+  %h4.label.label-info Group Membership
+  %p
+    %ul
+      -ContactsGroup.find_all_by_contact_id(@contact.id).each do |x|
+        %li=x.group.name
+
+.form-actions
+  = link_to 'Edit', edit_contact_path(@contact), :class => 'btn btn-primary'
+  = link_to 'Back', contacts_path, :class => 'btn'

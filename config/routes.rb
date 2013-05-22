@@ -1,5 +1,14 @@
 Smsmanager::Application.routes.draw do
 
+  resources :bulk_message_templates
+
+
+  resources :groups
+
+
+  resources :contacts
+
+
   match 'incoming_messages/receive' => 'incoming_messages#receive'
   resources :incoming_messages
 

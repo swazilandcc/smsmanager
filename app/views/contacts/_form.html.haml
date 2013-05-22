@@ -1,0 +1,25 @@
+= simple_form_for(@contact, :html => {:class => "form-horizontal"}, :validate => true) do |f|
+  = f.error_notification
+
+  .span11
+    .form-inputs
+      .span5
+        = f.input :title, :label => 'Title (Mr. / Mrs. / Miss. / Dr. etc)', :as => :select, :collection => ['Mr.', 'Miss.', 'Mrs.', 'Dr.', 'Hon.'], :prompt => 'Select salutation'
+        = f.input :first_name, :label => 'First Name'
+        = f.input :last_name, :label => 'Last Name'
+        = f.input :cell_number, :label => 'Cell Number (7xxxxxx)'
+      .span5.customArea
+        %h4 Group Membership
+        = hidden_field_tag "contact[group_ids][]", nil
+        %table.table.table-bordered.table.condensed
+          - Group.all.each do |group|
+            %tr
+              %td
+                = check_box_tag "contact[group_ids][]", group.id, @contact.group_ids.include?(group.id)
+              %td
+                = group.name
+
+  .span11
+    .form-actions
+      = f.button :submit, :class => 'btn btn-success'
+      = link_to 'Back', contacts_path, :class => 'btn'

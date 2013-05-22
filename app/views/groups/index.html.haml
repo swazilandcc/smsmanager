@@ -1,0 +1,24 @@
+%h1.text-info Groups
+%br
+.well
+  = link_to 'Add New Group', new_group_path, :class => 'btn btn-success'
+%br
+%table.table.table-bordered.table-stripped.table-condensed
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th
+      %th
+      %th
+
+  %tbody
+  - @groups.each do |group|
+    %tr
+      %td= group.name
+      %td= group.description
+      %td= link_to "<i class=\"icon-eye-open\"></i> View Info".html_safe, group, :class => 'btn'
+      %td= link_to "<i class=\"icon-pencil\"></i> Edit".html_safe, edit_group_path(group), :class => 'btn btn-primary'
+      %td= link_to "<i class=\"icon-trash\"></i> Delete".html_safe, group, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+
+

@@ -1,1 +1,22 @@
 %h2.text-info="Welcome #{current_user.last_name} #{current_user.first_name}"
+%br
+.row-fluid
+  .span3.alert
+    %h4.text-success General Info
+    %br
+    %table.table.table-bordered{:style => 'font-size: 12px;'}
+      %tr
+        %td # Contacts in Address Book
+        %td
+          %b=Contact.count()
+      %tr
+        %td # Groups
+        %td
+          %b=Group.count()
+      %tr
+        %td # Message Templates
+        %td
+          %b=BulkMessageTemplate.count()
+    %h4.text-success Competitions
+    %br
+

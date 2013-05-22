@@ -11,7 +11,40 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130521185232) do
+ActiveRecord::Schema.define(:version => 20130522043537) do
+
+  create_table "bulk_message_templates", :force => true do |t|
+    t.string   "name"
+    t.text     "message"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "contacts", :force => true do |t|
+    t.string   "title"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "cell_number"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "contacts", ["cell_number"], :name => "index_contacts_on_cell_number"
+  add_index "contacts", ["first_name"], :name => "index_contacts_on_first_name"
+
+  create_table "contacts_groups", :force => true do |t|
+    t.integer  "contact_id"
+    t.integer  "group_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "groups", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "incoming_messages", :force => true do |t|
     t.string   "sender"

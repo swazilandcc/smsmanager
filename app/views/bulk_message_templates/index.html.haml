@@ -1,0 +1,23 @@
+%h1.text-info Bulk Message Templates
+%br
+.well
+  = link_to 'New Bulk Message Template', new_bulk_message_template_path, :class => 'btn btn-success'
+%br
+%table.table.table-bordered.table-condensed
+  %thead
+    %tr
+      %th Name
+      %th Message
+      %th
+      %th
+      %th
+
+  %tbody
+  - @bulk_message_templates.each do |bulk_message_template|
+    %tr
+      %td= bulk_message_template.name
+      %td= bulk_message_template.message
+      %td= link_to "<i class=\"icon-eye-open\"></i> Show".html_safe, bulk_message_template, :class => 'btn'
+      %td= link_to "<i class=\"icon-pencil\"></i> Edit".html_safe, edit_bulk_message_template_path(bulk_message_template), :class => 'btn btn-primary'
+      %td= link_to "<i class=\"icon-trash\"></i> Delete".html_safe, bulk_message_template, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+

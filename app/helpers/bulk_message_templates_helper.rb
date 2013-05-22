@@ -1,0 +1,2 @@
+module BulkMessageTemplatesHelper
+end
