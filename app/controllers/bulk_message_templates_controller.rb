@@ -21,6 +21,21 @@ class BulkMessageTemplatesController < ApplicationController
     end
   end
 
+  def getMessage
+
+    @message_template_id = params[:message_template_id]
+
+    @message_template = BulkMessageTemplate.find(@message_template_id)
+
+    respond_to do |format|
+
+      format.json { render json: {:message_template => @message_template}}
+
+    end
+
+
+  end
+
   # GET /bulk_message_templates/new
   # GET /bulk_message_templates/new.json
   def new

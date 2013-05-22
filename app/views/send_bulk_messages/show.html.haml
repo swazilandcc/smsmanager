@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Group:
+  = @send_bulk_message.group_id
+%p
+  %b Message:
+  = @send_bulk_message.message
+%p
+  %b Status:
+  = @send_bulk_message.status
+%p
+  %b User:
+  = @send_bulk_message.user_id
+
+= link_to 'Edit', edit_send_bulk_message_path(@send_bulk_message)
+\|
+= link_to 'Back', send_bulk_messages_path

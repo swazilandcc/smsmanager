@@ -18,6 +18,7 @@ gem 'net-ping'
 gem 'twitter-bootstrap-rails'
 gem 'whenever'
 gem 'sidekiq'
+gem 'chosen-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.

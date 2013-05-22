@@ -1,5 +1,10 @@
 Smsmanager::Application.routes.draw do
 
+  match "/bulk_message_templates/getMessage" => "bulk_message_templates#getMessage"
+
+  resources :send_bulk_messages
+
+
   resources :bulk_message_templates
 
 

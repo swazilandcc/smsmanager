@@ -7,4 +7,6 @@ class Group < ActiveRecord::Base
   has_many :contacts_groups, :dependent => :delete_all
   has_many :contacts, :through => :contacts_groups, :dependent => :delete_all
 
+  has_many :send_bulk_messages
+
 end

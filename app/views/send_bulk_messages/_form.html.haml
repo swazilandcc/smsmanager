@@ -1,0 +1,21 @@
+= simple_form_for(@send_bulk_message, :validate => true) do |f|
+  = f.error_notification
+
+  .form-inputs
+    .alert
+      %h3 Group Information
+      .well#groupContacts
+        %h4 No group selected
+      %h3 Select Group
+      = f.input :group_id, :as => :select, :collection => Group.all, :prompt => 'Group', :label => false, :label_method => :name, :value_method => :id
+      %h3 Message Templates
+      =select_tag "send_bulk_message_message_template", options_for_select(BulkMessageTemplate.all.collect{ |u| [u.name, u.id] }), :prompt => "Select a Message Template"
+      %br
+      %h3 Message Content (160 Characters Max)
+      = f.input :message,:input_html => {:cols => 4, :rows => 6, :maxlength => 160}, :label => false
+      = f.input :status, :as => :hidden
+      = f.input :user_id, :as => :hidden, :input_html => {:value => current_user.id}
+
+  .form-actions
+    = f.button :submit, :class => 'btn btn-success', :value => 'Send Bulk Message'
+    = link_to 'Back', send_bulk_messages_path, :class => 'btn'
