@@ -1,6 +1,5 @@
-class BulkSend
+class BulkSendWorker
   include Sidekiq::Worker
-  sidekiq_options queue: "high"
 
   def perform(group_id, msg, user_id)
 

@@ -44,7 +44,7 @@ class SendBulkMessagesController < ApplicationController
 
     respond_to do |format|
       if @send_bulk_message.save
-        BulkSend.perform_async(@send_bulk_message.group_id, @send_bulk_message.message, current_user.id)
+        BulkSendWorker.perform_async(@send_bulk_message.group_id, @send_bulk_message.message, current_user.id)
 
         format.html { redirect_to send_bulk_messages_url, notice: 'Bulk Message successfully submitted for delivery!' }
         format.json { render json: @send_bulk_message, status: :created, location: @send_bulk_message }
