@@ -3,7 +3,7 @@
 .well
   = link_to 'Send Bulk Message', new_send_bulk_message_path, :class => 'btn btn-success'
 %br
-%table.table-bordered.table-condensed.tabel-stripped
+%table.table.table-bordered.table-condensed.table-stripped
   %thead
     %tr
       %th Sent To
@@ -20,6 +20,6 @@
       %td= send_bulk_message.message
       %td= send_bulk_message.status
       %td= send_bulk_message.user.first_name rescue nil
-      %td= send_bulk_message.created_at.strftime("%d-%m-%Y %H:%i")
+      %td= send_bulk_message.created_at.strftime("%d-%m-%Y %H:%M")
       %td= link_to 'Show', send_bulk_message, :class => 'btn'
 
