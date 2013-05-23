@@ -12,7 +12,7 @@ load "config/recipes/nodejs"
 #load "config/recipes/rbenv"
 load "config/recipes/check"
 
-server "swazilandcc-sms-manager.sytes.net", :web, :app, :db, primary: true
+server "192.168.1.254", :web, :app, :db, primary: true
 
 #set :whenever_command, "bundle exec whenever"
 #set :whenever_environment, "production"
