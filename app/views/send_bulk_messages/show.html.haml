@@ -1,18 +1,21 @@
-%p#notice= notice
+%h1 Sent Bulk Message
+.well
+  %table.table.table-bordered.table-stripped.table-condensed
+    %tr
+      %td Sent to Group
+      %td=@send_bulk_message.group.name rescue nil
+    %tr
+      %td Message
+      %td=@send_bulk_message.message
+    %tr
+      %td Status
+      %td=@send_bulk_message.status
+    %tr
+      %td Sent By
+      %td="#{@send_bulk_message.user.first_name rescue nil} #{@send_bulk_message.user.last_name rescue nil}"
+    %tr
+      %td Date/Time Sent
+      %td="#{@send_bulk_message.created_at.strftime("%d-%m-%Y %H:%M")}"
 
-%p
-  %b Group:
-  = @send_bulk_message.group_id
-%p
-  %b Message:
-  = @send_bulk_message.message
-%p
-  %b Status:
-  = @send_bulk_message.status
-%p
-  %b User:
-  = @send_bulk_message.user_id
-
-= link_to 'Edit', edit_send_bulk_message_path(@send_bulk_message)
-\|
-= link_to 'Back', send_bulk_messages_path
+.form-actions
+  = link_to 'Back', send_bulk_messages_path, :class => 'btn'

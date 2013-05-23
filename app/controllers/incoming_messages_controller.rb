@@ -29,43 +29,9 @@ class IncomingMessagesController < ApplicationController
     sender = params[:sender] rescue nil
     keyword = params[:keyword] rescue nil
     option = params[:option] rescue nil
-    extra_text = params[:extra_text]
+    extra_text = params[:extra_text] rescue nil
 
-    @incoming_message = IncomingMessage.new
-
-    if (sender.nil? == false)
-
-      @incoming_message.sender = sender
-      @incoming_message.keyword = keyword
-      @incoming_message.option = option
-      @incoming_message.extra_text = extra_text
-      @incoming_message.matched_to_competition = false
-      @incoming_message.matched_to_devotional = false
-
-      if @incoming_message.save!
-
-        @send_response = SendSMS.new
-        @send_response.momt = "MT"
-        @send_response.sender = "7070"
-        @send_response.receiver = sender
-        @send_response.msgdata = "Your message has been received successfully. Thank you!"
-        @send_response.sms_type = 2
-
-        if @send_response.save!
-
-          @incoming_message.reply_message = @send_response.msgdata
-          @incoming_message.reply_sent = true
-          @incoming_message.reply_sent_date_time = Time.now
-          @incoming_message.save!
-
-        end
-
-
-
-      end
-
-    end
-
+    IncomingSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your message has been successfully. Thank you!')
     render text: "OK"
 
   end

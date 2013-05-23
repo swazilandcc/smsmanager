@@ -1,7 +1,7 @@
 class BulkSendWorker
   include Sidekiq::Worker
 
-  def perform(group_id, msg, user_id)
+  def perform(group_id, msg, user_id, send_bulk_id)
 
     group_contacts = ContactsGroup.find_all_by_group_id(group_id)
 
@@ -14,6 +14,10 @@ class BulkSendWorker
       @sms_log.message = msg
       @sms_log.status = "Sending"
       @sms_log.user_id = user_id
+
+      bulk_send = SendBulkMessage.find(send_bulk_id)
+      bulk_send.status = "Sending"
+      bulk_send.save!
 
       if @sms_log.save!
 
@@ -28,6 +32,8 @@ class BulkSendWorker
         if @send_response.save!
 
           @sms_log.status = "Sent"
+          bulk_send.status = "Sent"
+          bulk_send.save!
 
         end
 
