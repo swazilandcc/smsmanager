@@ -1,0 +1,74 @@
+.well
+  %h1.text-info="#{@competition.name}"
+
+.well
+  %h4 Competition Details
+  %table.table.table-bordered.table-condensed.table-stripped
+    %tr
+      %td
+        %b Description:
+      %td
+        = @competition.description
+    %tr
+      %td
+        %b Start date:
+      %td
+        = @competition.start_date.strftime("%d-%m-%Y") rescue nil
+    %tr
+      %td
+        %b End date:
+      %td
+        = @competition.end_date.strftime("%d-%m-%Y") rescue nil
+    %tr
+      %td
+        %b Keyword:
+      %td
+        = @competition.keyword
+    %tr
+      %td
+        %b Keyword is Case Sensitive:
+      %td
+        = @competition.keyword_case_sensitive
+
+    %tr
+      %td
+        %b User:
+      %td
+        ="#{@competition.user.first_name rescue nil} #{@compeition.user.last_name rescue nil}"
+
+    %tr
+      %td
+        %b Success message:
+      %td
+        = @competition.success_message
+
+    %tr
+      %td
+        %b Incorrect option message:
+      %td
+        = @competition.incorrect_option_message
+
+    %tr
+      %td
+        %b Response include serial:
+      %td
+        = @competition.response_include_serial? ? 'Yes' : 'No'
+
+  %br
+  -if @competition.competition_options.nil? == false
+    %h4 Competition Option
+    %table.table.table-bordered.table-stripped.table-condensed
+      %thead
+        %tr
+          %th Option Number
+          %th Option Name
+      %tbody
+      -@competition.competition_options.each do |x|
+        %tr
+          %td=x.option_number
+          %td=x.option_name
+
+
+.form-action
+  = link_to 'Edit', edit_competition_path(@competition), :class => 'btn btn-primary'
+  = link_to 'Back', competitions_path, :class => 'btn'

@@ -8,27 +8,31 @@
       %tr
         %td # Contacts in Address Book
         %td
-          %b=Contact.count()
+          %b=@contact_count
       %tr
         %td # Groups
         %td
-          %b=Group.count()
+          %b=@group_count
       %tr
         %td # Message Templates
         %td
-          %b=BulkMessageTemplate.count()
+          %b=@bulk_message_template_count
     %br
     %h4 Incoming SMS
     %br
     %table.table.table-bordered{:style => 'font-size: 12px;'}
       %tr
         %td # Today
-        %td=IncomingMessage.all(:conditions => "created_at BETWEEN '#{Time.now.strftime("%Y-%m-%d")} 00:00:00' AND '#{Time.now.strftime("%Y-%m-%d")} 23:59:59'").count()
+        %td=@incoming_messages_today
       %tr
         %td # This Month
-        %td=IncomingMessage.all(:conditions => "created_at BETWEEN '#{Time.now.strftime("%Y-%m")}-01 00:00:00' AND '#{Time.now.strftime("%Y-%m")}-31 23:59:59'").count()
+        %td=@incoming_messages_this_month
 
     %h4.text-success Competitions
     %br
+    %table.table.table-bordered{:style => 'font-size: 12px;'}
+      %tr
+        %td # Active Competitions
+        %td=@active_competitions
 
 

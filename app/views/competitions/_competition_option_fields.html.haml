@@ -1,0 +1,14 @@
+%fieldset
+  %table.table.table-bordered.table-stripped.table-condensed
+    %thead
+      %tr
+        %th Option Number
+        %th Option Name
+        %th
+    %tbody
+      %tr
+        %td=f.input :option_number
+        %td=f.input :option_name
+        %td
+          = f.hidden_field :_destroy
+          = link_to "Remove", '#', class: "btn btn-small btn-danger remove_fields"

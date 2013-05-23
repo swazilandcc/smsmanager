@@ -11,4 +11,6 @@ class User < ActiveRecord::Base
 
   has_many :send_bulk_messages
   has_many :sms_logs
+  has_many :competitions
+
 end

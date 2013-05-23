@@ -2,6 +2,9 @@ require 'sidekiq/web'
 
 Smsmanager::Application.routes.draw do
 
+  resources :competitions
+
+
   authenticate :user do
 
     mount Sidekiq::Web, at: "/sidekiq"

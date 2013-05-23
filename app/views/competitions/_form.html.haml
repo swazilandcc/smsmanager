@@ -1,0 +1,35 @@
+= simple_form_for(@competition, :html => {:class => "form-horizontal"}) do |f|
+  = f.error_notification
+
+  .span11
+    .form-inputs
+      .span5
+        = f.input :name
+        = f.input :description, :input_html => {:cols => 3, :rows => 3}
+        = f.input :start_date, :as => :string, :label => 'Start Date of the Competition'
+        = f.input :end_date, :as => :string, :label => 'End Date of the Competition'
+        = f.input :keyword, :as => :string
+        = f.input :keyword_case_sensitive, :label => 'Keyword is Case Sensitive'
+      .span5
+        -if action_name == 'new'
+          = f.input :user_id, :as => :hidden, :input_html => {:value => current_user.id}
+        -else
+          = f.input :user_id, :as => :hidden
+        = f.input :success_message, :label => 'Success Message (Reply message when a successful entry is received)', :input_html => {:cols => 3, :rows => 3}
+        = f.input :closed_message, :label => 'Closed Message (Reply message when Competition is closed/inactive)', :input_html => {:cols => 3, :rows => 3}
+        = f.input :incorrect_option_message, :label => 'Error Message (Reply message when an unsuccessful entry is received)', :input_html => {:cols => 3, :rows => 3}
+        = f.input :response_include_serial, :label => 'Include a unique serial number with each reply'
+
+  .span11.well
+    %h4 Competition Options
+    =f.fields_for :competition_options do |builder|
+      = render 'competition_option_fields', f: builder
+    = link_to_add_fields "Add Option", f, :competition_options
+
+  .span11.well
+    = f.input :active, :label => 'Competition is Active'
+
+  .span11
+    .form-actions
+      = f.button :submit, :class => 'btn btn-success'
+      = link_to 'Back', competitions_path, :class => 'btn'

@@ -11,13 +11,38 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130522113419) do
+ActiveRecord::Schema.define(:version => 20130523042310) do
 
   create_table "bulk_message_templates", :force => true do |t|
     t.string   "name"
     t.text     "message"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "competition_options", :force => true do |t|
+    t.integer  "competition_id"
+    t.integer  "option_number"
+    t.string   "option_name"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  create_table "competitions", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.string   "keyword"
+    t.boolean  "keyword_case_sensitive"
+    t.integer  "user_id"
+    t.text     "success_message"
+    t.text     "closed_message"
+    t.boolean  "active"
+    t.string   "incorrect_option_message"
+    t.boolean  "response_include_serial"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "contacts", :force => true do |t|

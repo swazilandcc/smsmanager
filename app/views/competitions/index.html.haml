@@ -1,0 +1,30 @@
+%h1.text-info SCC Competitions
+%br
+.well
+  = link_to 'New Competition', new_competition_path, :class => 'btn btn-success'
+%table.table.table-bordered.table-stripped.table-condensed
+  %thead
+    %tr
+      %th Name
+      %th Description
+      %th Start date
+      %th End date
+      %th Keyword
+      %th Entries Received
+      %th Current Status
+      %th
+      %th
+
+  %tbody
+  - @competitions.each do |competition|
+    %tr
+      %td= competition.name
+      %td= competition.description
+      %td= competition.start_date.strftime("%d-%m-%Y")
+      %td= competition.end_date.strftime("%d-%m-%Y")
+      %td= competition.keyword
+      %td= IncomingMessage.find_all_by_competition_id(competition.id).count() rescue nil
+      %td= competition.active? ? 'Active' : 'Inactive'
+      %td= link_to 'Show', competition, :class => 'btn'
+      %td= link_to 'Edit', edit_competition_path(competition), :class => 'btn btn-primary'
+      -#%td= link_to 'Destroy', competition, :method => :delete, :data => { :confirm => 'Are you sure?' }
