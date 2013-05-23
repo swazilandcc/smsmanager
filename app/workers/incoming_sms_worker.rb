@@ -144,12 +144,12 @@ class IncomingSmsWorker
         @incoming_message.matched_to_competition = true
         @incoming_message.matched_to_devotional = false
         @incoming_message.competition_id = @competition.id
-        @incoming_message.reply_message = "SMS entry for " + @competition.keyword + " is not open yet. Please try again on the #{@competition.start_date("%d-%m-%Y")}. Thank you.[PRE]"
+        @incoming_message.reply_message = "SMS entry for #{@competition.keyword} is not open yet. Please try again on the #{@competition.start_date.strftime("%d-%m-%Y")}. Thank you.[PRE]"
 
         if @incoming_message.save!
 
 
-          @send_response.msgdata = "SMS entry for " + @competition.keyword + " is not open yet. Please try again on the #{@competition.start_date("%d-%m-%Y")}. Thank you."
+          @send_response.msgdata = "SMS entry for #{@competition.keyword} is not open yet. Please try again on the #{@competition.start_date.strftime("%d-%m-%Y")}. Thank you."
           @send_response.sms_type = 2
 
           if @send_response.save!
