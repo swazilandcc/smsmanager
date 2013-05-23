@@ -17,17 +17,14 @@ class IncomingSmsWorker
 
       if @incoming_message.save!
 
-        #@send_response = SendSMS.new
-        #@send_response.momt = "MT"
-        #@send_response.sender = "7070"
-        #@send_response.receiver = sender
-        #@send_response.msgdata = mess
-        #@send_response.sms_type = 2
+        @send_response = SendSMS.new
+        @send_response.momt = "MT"
+        @send_response.sender = "7070"
+        @send_response.receiver = sender
+        @send_response.msgdata = mess
+        @send_response.sms_type = 2
 
-        url = URI.parse(URI.encode("http://localhost:13013/cgi-bin/sendsms?username=smsmanager&password=P5ssw0rd&from=7070&to=#{sender}&text=#{message_to_send}&dlr-mask=1+2"))
-        resp = Net::HTTP.get_response(url)
-
-        if resp.to_s.match("Accepted for delivery").nil? == false
+        if @send_response.save!
 
           @incoming_message.reply_message = @send_response.msgdata
           @incoming_message.reply_sent = true
@@ -35,16 +32,6 @@ class IncomingSmsWorker
           @incoming_message.save!
 
         end
-
-
-
-        #http://localhost:13013/cgi-bin/sendsms?username=smsmanager&password=P5ssw0rd&from=7070&to=+26876024130+26876612160&text=Hello+world&dlr-mask=1+2
-
-        #if @send_response.save!
-        #
-        #
-        #
-        #end
 
 
 
