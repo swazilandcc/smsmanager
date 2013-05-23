@@ -5,6 +5,8 @@ Smsmanager::Application.routes.draw do
   resources :competitions
 
 
+
+
   authenticate :user do
 
     mount Sidekiq::Web, at: "/sidekiq"
@@ -13,6 +15,8 @@ Smsmanager::Application.routes.draw do
 
 
   resources :sms_logs
+
+  post '/dashboard/fhLoad' => 'dashboard#fhLoad'
 
   match "/bulk_message_templates/getMessage" => "bulk_message_templates#getMessage"
   match "/send_bulk_messages/getContacts" => "send_bulk_messages#getContacts"

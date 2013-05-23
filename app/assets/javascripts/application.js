@@ -18,3 +18,38 @@
 //= require rails.validations.simple_form
 //= require twitter/bootstrap
 //= require_tree .
+
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(drawChart);
+
+function drawChart() {
+
+    if(document.getElementById("chart_div")){
+
+
+        var jsonData = $.ajax({
+            url: "/dashboard/fhLoad",
+            dataType:"json",
+            type: 'POST',
+            async: false
+        }).responseText;
+
+        // Create our data table out of JSON data loaded from server.
+        var data = new google.visualization.DataTable(jsonData);
+
+
+        new google.visualization.LineChart(document.getElementById('chart_div')).
+            draw(data, {curveType: "function",
+                width: 900, height: 400,
+                title: 'Total Number of SMS Received Per Hour',
+                vAxis: {maxValue: 100, minValue: 0}}
+        );
+    }else{
+
+        console.log("0nlyD4ashB0ard")
+
+    }
+
+
+}
+
