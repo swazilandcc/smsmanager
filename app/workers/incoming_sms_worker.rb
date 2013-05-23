@@ -8,7 +8,7 @@ class IncomingSmsWorker
 
       @cleaned_up_keyword = keyword.to_s.upcase.strip! rescue nil
 
-      @competition = Competition.where(:conditions => "active = 1 AND keyword = #{@cleaned_up_keyword} AND end_date >= #{Time.now.strftime("%Y-%m-%d")}").first
+      @competition = Competition.where("active = 1 AND keyword = #{@cleaned_up_keyword} AND end_date >= #{Time.now.strftime("%Y-%m-%d")}").first
 
       if @competition.nil? == false
 
