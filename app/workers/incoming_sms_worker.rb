@@ -20,33 +20,90 @@ class IncomingSmsWorker
       @send_response.sender = "7070"
       @send_response.receiver = sender
 
-      @competition = Competition.where("active = 1 AND keyword = '#{keyword.to_s.strip.upcase}' AND end_date > '#{Time.now.strftime("%Y-%m-%d")}'").first
+      @competition = Competition.where("keyword = '#{keyword.to_s.strip.upcase}'").first
 
-      if @competition.nil? == false
+      if @competition.active? == true && @competition.end_date >= Time.now.strftime("%Y-%m-%d")
 
-        # We have found a matching keyword from the senders text
+        if @competition.nil? == false
 
-        @competition_options = @competition.competition_options.where("option_number = #{option.to_i}").first
+          # We have found a matching keyword from the senders text
 
-        if @competition_options.nil? == false
+          @competition_options = @competition.competition_options.where("option_number = #{option.to_i}").first
 
-
-          # The Sender Has the right competition keyword and the option is right
-          @incoming_message.matched_to_competition = true
-          @incoming_message.competition_id = @competition.id
-          @incoming_message.reply_message = @competition.success_message
-
-          if @incoming_message.save!
+          if @competition_options.nil? == false
 
 
-            @send_response.msgdata = @competition.success_message
-            @send_response.sms_type = 2
+            # The Sender Has the right competition keyword and the option is right
+            @incoming_message.matched_to_competition = true
+            @incoming_message.competition_id = @competition.id
+            @incoming_message.reply_message = @competition.success_message
 
-            if @send_response.save!
+            if @incoming_message.save!
 
 
-              @incoming_message.reply_sent = true
-              @incoming_message.save!
+              @send_response.msgdata = @competition.success_message
+              @send_response.sms_type = 2
+
+              if @send_response.save!
+
+
+                @incoming_message.reply_sent = true
+                @incoming_message.reply_sent_date_time = Time.now
+                @incoming_message.save!
+
+              end
+
+
+            end
+
+          elsif @competition_options.nil? == true && @competition.competition_options.exists? == false
+
+            # There was not option defined for the competition so this is considered as a successful message
+            @incoming_message.matched_to_competition = false
+            @incoming_message.matched_to_devotional = false
+            @incoming_message.reply_message = message_to_send
+
+            if @incoming_message.save!
+
+
+              @send_response.msgdata = @competition.success_message
+              @send_response.sms_type = 2
+
+              if @send_response.save!
+
+
+                @incoming_message.reply_sent = true
+                @incoming_message.reply_sent_date_time = Time.now
+                @incoming_message.save!
+
+              end
+
+
+            end
+
+
+          else
+
+            # The Sender Has the right competition keyword but the option is wrong
+            @incoming_message.matched_to_competition = true
+            @incoming_message.competition_id = @competition.id
+            @incoming_message.reply_message = @competition.incorrect_option_message
+
+            if @incoming_message.save!
+
+
+              @send_response.msgdata = @competition.incorrect_option_message
+              @send_response.sms_type = 2
+
+              if @send_response.save!
+
+
+                @incoming_message.reply_sent = true
+                @incoming_message.reply_sent_date_time = Time.now
+                @incoming_message.save!
+
+              end
+
 
             end
 
@@ -56,21 +113,22 @@ class IncomingSmsWorker
 
         else
 
-          # The Sender Has the right competition keyword but the option is wrong
-          @incoming_message.matched_to_competition = true
-          @incoming_message.competition_id = @competition.id
-          @incoming_message.reply_message = @competition.incorrect_option_message
+          # We could not find any competition to match the received text ... so we send thank you
+          @incoming_message.matched_to_competition = false
+          @incoming_message.matched_to_devotional = false
+          @incoming_message.reply_message = message_to_send
 
           if @incoming_message.save!
 
 
-            @send_response.msgdata = @competition.incorrect_option_message
+            @send_response.msgdata = message_to_send
             @send_response.sms_type = 2
 
             if @send_response.save!
 
 
               @incoming_message.reply_sent = true
+              @incoming_message.reply_sent_date_time = Time.now
               @incoming_message.save!
 
             end
@@ -84,21 +142,23 @@ class IncomingSmsWorker
 
       else
 
-        # We could not find any competition to match the received text ... so we send thank you
+
+        # The competition is either inactive or is now closed
         @incoming_message.matched_to_competition = false
         @incoming_message.matched_to_devotional = false
-        @incoming_message.reply_message = message_to_send
+        @incoming_message.reply_message = @competition.closed_message.to_s + "[CLOSED]"
 
         if @incoming_message.save!
 
 
-          @send_response.msgdata = message_to_send
+          @send_response.msgdata = @competition.closed_message
           @send_response.sms_type = 2
 
           if @send_response.save!
 
 
             @incoming_message.reply_sent = true
+            @incoming_message.reply_sent_date_time = Time.now
             @incoming_message.save!
 
           end
@@ -106,9 +166,7 @@ class IncomingSmsWorker
 
         end
 
-
       end
-
 
     end
 
