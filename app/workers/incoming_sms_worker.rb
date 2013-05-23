@@ -59,9 +59,9 @@ class IncomingSmsWorker
           elsif @competition_options.nil? == true && @competition.competition_options.exists? == false
 
             # There was not option defined for the competition so this is considered as a successful message
-            @incoming_message.matched_to_competition = false
-            @incoming_message.matched_to_devotional = false
-            @incoming_message.reply_message = message_to_send
+            @incoming_message.matched_to_competition = true
+            @incoming_message.competition_id = @competition.id
+            @incoming_message.reply_message = @competition.success_message
 
             if @incoming_message.save!
 
@@ -139,6 +139,30 @@ class IncomingSmsWorker
 
         end
 
+      elsif @competition.active? == true && @competition.end_date.strftime("%Y-%m-%d") >= Time.now.strftime("%Y-%m-%d") && @competition.start_date.strftime("%Y-%m-%d") > Time.now.strftime("%Y-%m-%d")
+         # The competition hasn't started yet ... notify the sender
+        @incoming_message.matched_to_competition = true
+        @incoming_message.matched_to_devotional = false
+        @incoming_message.competition_id = @competition.id
+        @incoming_message.reply_message = "SMS entry for " + @competition.keyword + " is not open yet. Please try again on the #{@competition.start_date("%d-%m-%Y")}. Thank you.[PRE]"
+
+        if @incoming_message.save!
+
+
+          @send_response.msgdata = "SMS entry for " + @competition.keyword + " is not open yet. Please try again on the #{@competition.start_date("%d-%m-%Y")}. Thank you."
+          @send_response.sms_type = 2
+
+          if @send_response.save!
+
+
+            @incoming_message.reply_sent = true
+            @incoming_message.reply_sent_date_time = Time.now
+            @incoming_message.save!
+
+          end
+
+
+        end
 
       else
 

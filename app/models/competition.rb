@@ -4,7 +4,7 @@ class Competition < ActiveRecord::Base
   accepts_nested_attributes_for :competition_options, :allow_destroy => true, :reject_if => :all_blank
 
   validates_presence_of :name, :description, :keyword, :start_date, :end_date, :success_message, :closed_message
-  validates_uniqueness_of :name, :keyword, :start_date
+  validates_uniqueness_of :name, :keyword
 
   belongs_to :user
 

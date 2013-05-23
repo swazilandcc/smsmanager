@@ -7,8 +7,8 @@
       %a{:href => "#home", "data-toggle" => "tab"} Competition Info
     %li
       %a{:href => "#entries", "data-toggle" => "tab"} Competition Entries
-    %li
-      %a{:href => "#winners", "data-toggle" => "tab"} Competition Winners
+    -#%li
+    -#  %a{:href => "#winners", "data-toggle" => "tab"} Competition Winners
   .tab-content
     #home.tab-pane.active
       %h4.text-info Competition Details
@@ -92,8 +92,27 @@
             %td=sender
             %td=count
 
-    #winners.tab-pane
-      %h4.text-info Competition Winners
+      -@competition.competition_options.exists? == true
+      %h4.text-info Competition Option Entries
+      %table.table.table-bordered.table-condensed.table-stripped
+        %thead
+          %tr
+            %th Option Number
+            %th Option Name
+            %th Total # of Votes
+        %tbody
+        -CompetitionOption.find_all_by_competition_id(@competition.id).each do |x|
+          %tr
+            %td
+              =x.option_number
+            %td
+              =x.option_name
+            %td
+              =IncomingMessage.all(:conditions => "competition_id = #{@competition.id} AND `option` = #{x.option_number} ").count()
+
+
+    -##winners.tab-pane
+    -#  %h4.text-info Competition Winners
 
 
 
