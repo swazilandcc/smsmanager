@@ -22,7 +22,7 @@ class IncomingSmsWorker
 
       @competition = Competition.where("keyword = '#{keyword.to_s.strip.upcase}'").first
 
-      if @competition.active? == true && @competition.end_date.strftime("%Y-%m-%d") >= Time.now.strftime("%Y-%m-%d")
+      if @competition.active? == true && @competition.end_date.strftime("%Y-%m-%d") >= Time.now.strftime("%Y-%m-%d") && @competition.start_date.strftime("%Y-%m-%d") <= Time.now.strftime("%Y-%m-%d")
 
         if @competition.nil? == false
 
