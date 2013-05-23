@@ -9,7 +9,7 @@
         = f.input :start_date, :as => :string, :label => 'Start Date of the Competition'
         = f.input :end_date, :as => :string, :label => 'End Date of the Competition'
         = f.input :keyword, :as => :string
-        = f.input :keyword_case_sensitive, :label => 'Keyword is Case Sensitive'
+        = f.input :keyword_case_sensitive, :label => 'Keyword is Case Sensitive', :as => :hidden
       .span5
         -if action_name == 'new'
           = f.input :user_id, :as => :hidden, :input_html => {:value => current_user.id}
@@ -17,7 +17,7 @@
           = f.input :user_id, :as => :hidden
         = f.input :success_message, :label => 'Success Message (Reply message when a successful entry is received)', :input_html => {:cols => 3, :rows => 3}
         = f.input :closed_message, :label => 'Closed Message (Reply message when Competition is closed/inactive)', :input_html => {:cols => 3, :rows => 3}
-        = f.input :incorrect_option_message, :label => 'Error Message (Reply message when an unsuccessful entry is received)', :input_html => {:cols => 3, :rows => 3}
+        = f.input :incorrect_option_message, :as => :text, :input_html => {:cols => 3, :row => 2}, :label => 'Error Message (Reply message when an unsuccessful entry is received)', :input_html => {:cols => 3, :rows => 3}
         = f.input :response_include_serial, :label => 'Include a unique serial number with each reply'
 
   .span11.well

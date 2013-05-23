@@ -1,38 +1,60 @@
-%h2.text-info="Welcome #{current_user.last_name} #{current_user.first_name}"
-%br
-.row-fluid
-  .span3.alert
-    %h4.text-success General Info
-    %br
-    %table.table.table-bordered{:style => 'font-size: 12px;'}
-      %tr
-        %td # Contacts in Address Book
-        %td
-          %b=@contact_count
-      %tr
-        %td # Groups
-        %td
-          %b=@group_count
-      %tr
-        %td # Message Templates
-        %td
-          %b=@bulk_message_template_count
-    %br
-    %h4 Incoming SMS
-    %br
-    %table.table.table-bordered{:style => 'font-size: 12px;'}
-      %tr
-        %td # Today
-        %td=@incoming_messages_today
-      %tr
-        %td # This Month
-        %td=@incoming_messages_this_month
+.alert
+  %h2.text-info="Welcome #{current_user.last_name rescue nil} #{current_user.first_name rescue nil}"
+.well.span3{:style => 'margin-top: 0; margin-left: 0'}
+  %h4.text-success.alert General Info
+  %table.table.table-bordered{:style => 'font-size: 12px;'}
+    %tr
+      %td # Contacts in Address Book
+      %td
+        %b=@contact_count
+    %tr
+      %td # Groups
+      %td
+        %b=@group_count
+    %tr
+      %td # Message Templates
+      %td
+        %b=@bulk_message_template_count
+  %h4.text-success.alert Outgoing SMS
+  %table.table.table-bordered{:style => 'font-size: 12px;'}
+    %tr
+      %td # Today
+      %td=@outgoing_messages_today
+    %tr
+      %td # This Month
+      %td=@outgoing_messages_this_month
 
-    %h4.text-success Competitions
-    %br
-    %table.table.table-bordered{:style => 'font-size: 12px;'}
+  %h4.text-success.alert Incoming SMS
+  %table.table.table-bordered{:style => 'font-size: 12px;'}
+    %tr
+      %td # Today
+      %td=@incoming_messages_today
+    %tr
+      %td # This Month
+      %td=@incoming_messages_this_month
+
+  %h4.text-success.alert Competitions
+  %table.table.table-bordered{:style => 'font-size: 12px;'}
+    %tr
+      %td # Active Competitions
+      %td=@active_competitions.count()
+
+  %h4.text-success.alert Competition Entries
+  %table.table.table-bordered.table-condensed{:style => 'font-size: 12px;'}
+    %thead
       %tr
-        %td # Active Competitions
-        %td=@active_competitions
+        %th Title
+        %th Entries
+        %th
+    %tbody
+    -@active_competitions.each do |competition|
+      %tr
+        %td
+          =competition.name
+        %td
+          =IncomingMessage.find_all_by_competition_id(competition.id).count rescue nil
+        %td
+          =link_to 'Stats', competition_path(competition.id)
 
 
+.span4

@@ -28,7 +28,7 @@
       %td
         %b Keyword is Case Sensitive:
       %td
-        = @competition.keyword_case_sensitive
+        = @competition.keyword_case_sensitive? ? 'Yes' : 'No'
 
     %tr
       %td
