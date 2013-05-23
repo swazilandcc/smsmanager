@@ -37,7 +37,8 @@ Smsmanager::Application.routes.draw do
   resources :incoming_messages
 
 
-  devise_for :users
+  devise_for :users, :path_prefix => "system"
+  resources :users
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

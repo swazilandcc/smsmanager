@@ -1,4 +1,6 @@
 class BulkMessageTemplatesController < ApplicationController
+  load_and_authorize_resource
+
   # GET /bulk_message_templates
   # GET /bulk_message_templates.json
   def index

@@ -37,13 +37,13 @@ function drawChart() {
         // Create our data table out of JSON data loaded from server.
         var data = new google.visualization.DataTable(jsonData);
 
-
-        new google.visualization.LineChart(document.getElementById('chart_div')).
+        new google.visualization.ColumnChart(document.getElementById('chart_div')).
             draw(data, {curveType: "function",
-                width: 900, height: 400,
+                width: 900, height: 500,
                 title: 'Total Number of SMS Received Per Hour',
                 vAxis: {maxValue: 100, minValue: 0}}
         );
+
     }else{
 
         console.log("0nlyD4ashB0ard")

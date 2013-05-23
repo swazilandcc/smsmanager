@@ -1,4 +1,5 @@
 class SendBulkMessagesController < ApplicationController
+  load_and_authorize_resource
   # GET /send_bulk_messages
   # GET /send_bulk_messages.json
   def index

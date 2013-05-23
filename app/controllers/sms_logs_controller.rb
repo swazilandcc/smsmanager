@@ -1,4 +1,5 @@
 class SmsLogsController < ApplicationController
+  load_and_authorize_resource
   # GET /sms_logs
   # GET /sms_logs.json
   def index

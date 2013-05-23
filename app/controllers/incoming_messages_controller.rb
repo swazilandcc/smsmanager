@@ -1,6 +1,7 @@
 class IncomingMessagesController < ApplicationController
   skip_before_filter :authenticate_user!, :only => [:receive]
 
+
   # GET /incoming_messages
   # GET /incoming_messages.json
   def index

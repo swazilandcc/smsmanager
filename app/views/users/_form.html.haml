@@ -1,0 +1,17 @@
+= simple_form_for(@user) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :first_name, :autofocus => true
+    = f.input :last_name
+    = f.input :email, :required => true
+    = f.input :password, :required => true
+    = f.input :password_confirmation, :required => true
+  .well
+    = f.label :roles
+    - for role in User::ROLES
+      = check_box_tag "user[roles][]", role, @user.roles.include?(role)
+      = h role.humanize
+    = hidden_field_tag "user[roles][]"
+  .form-actions
+    = f.button :submit, :class => 'btn btn-success'
+    = link_to 'Back', users_path, :class => 'btn'
