@@ -7,6 +7,9 @@
       %th Keyword
       %th Option
       %th Extra text
+      %th Received Date / Time
+      %th Reply Sent
+      %th Reply Send Date / Time
 
   %tbody
   - @incoming_messages.each do |incoming_message|
@@ -15,6 +18,9 @@
       %td= incoming_message.keyword
       %td= incoming_message.option
       %td= incoming_message.extra_text
+      %td= incoming_message.created_at.strftime("%d-%m-%Y %H:%M")
+      %td= incoming_message.reply_sent? ? 'Yes' : 'No'
+      %td= incoming_message.reply_sent_date_time.strftime("%d-%m-%Y %H:%M")
       -#%td= link_to 'Show', incoming_message, :class => 'btn'
       -#%td= link_to 'Edit', edit_incoming_message_path(incoming_message), :class => 'btn btn-primary'
       -#%td= link_to 'Destroy', incoming_message, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn'

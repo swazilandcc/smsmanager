@@ -2,19 +2,24 @@
 .well
   %table.table.table-bordered.table-stripped.table-condensed
     %tr
-      %td Sent to Group
+      %td
+        %b Sent to Group
       %td=@send_bulk_message.group.name rescue nil
     %tr
-      %td Message
+      %td
+        %b Message
       %td=@send_bulk_message.message
     %tr
-      %td Status
+      %td
+        %b Status
       %td=@send_bulk_message.status
     %tr
-      %td Sent By
+      %td
+        %b Sent By
       %td="#{@send_bulk_message.user.first_name rescue nil} #{@send_bulk_message.user.last_name rescue nil}"
     %tr
-      %td Date/Time Sent
+      %td
+        %b Date/Time Sent
       %td="#{@send_bulk_message.created_at.strftime("%d-%m-%Y %H:%M")}"
 
 .form-actions

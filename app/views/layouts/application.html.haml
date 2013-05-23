@@ -63,10 +63,15 @@
                     %i.icon-download-alt
                     Devotional SMS
 
-                %li
-                  %a{:href => '#'}
+                %li.dropdown
+                  %a{:href => '#', "data-toggle" => "dropdown"}
                     %i.icon-book
                     Reports
+                    %b.caret
+                    %ul.dropdown-menu
+                      %li
+                        %a{:href => '/incoming_messages'}
+                          All Incoming Messages
 
                 %li.dropdown
                   %a{:href => "#", "data-toggle" => "dropdown"}
