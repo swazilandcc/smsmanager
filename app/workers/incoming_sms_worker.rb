@@ -47,7 +47,7 @@ class IncomingSmsWorker
           @send_response.sender = "7070"
           @send_response.receiver = sender
 
-          if @matches_option = true
+          if @matches_option == true
 
             @send_response.msgdata = @competition.success_message
 
