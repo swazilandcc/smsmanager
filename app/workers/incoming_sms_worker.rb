@@ -4,106 +4,111 @@ class IncomingSmsWorker
 
   def perform(sender, keyword, option, extra_text, message_to_send)
 
-    if (sender.nil? == false)
+    if sender.nil? == false
 
-      @cleaned_up_keyword = keyword.to_s.upcase.strip! rescue nil
+      # Prepare incoming message log
+      @incoming_message = IncomingMessage.new
+      @incoming_message.sender = sender
+      @incoming_message.keyword = keyword
+      @incoming_message.option = option
+      @incoming_message.extra_text = extra_text
 
-      @competition = Competition.where("active = 1 AND keyword = '#{@cleaned_up_keyword}' AND end_date >= '#{Time.now.strftime("%Y-%m-%d")}'").first
+
+      # Prepare Response
+      @send_response = SendSMS.new
+      @send_response.momt = "MT"
+      @send_response.sender = "7070"
+      @send_response.receiver = sender
+
+      @competition = Competition.where("active = 1 AND keyword = '#{keyword.to_s.strip.upcase}' AND end_date > '#{Time.now.strftime("%Y-%m-%d")}'").first
 
       if @competition.nil? == false
 
-        @incoming_message = IncomingMessage.new
+        # We have found a matching keyword from the senders text
 
-        if @competition.competition_options.exists? == true && option.nil? == false
+        @competition_options = @competition.competition_options.where("option_number = #{option.to_i}").first
 
-           @competition.competition_options.each do |x|
+        if @competition_options.nil? == false
 
-              if option == x.option_number
 
-                @matches_option = true
+          # The Sender Has the right competition keyword and the option is right
+          @incoming_message.matched_to_competition = true
+          @incoming_message.competition_id = @competition.id
+          @incoming_message.reply_message = @competition.success_message
 
-              else
+          if @incoming_message.save!
 
-                @matches_option = false
-
-              end
-
-           end
-
-        end
-
-        @incoming_message.sender = sender
-        @incoming_message.keyword = keyword
-        @incoming_message.option = option
-        @incoming_message.extra_text = extra_text
-        @incoming_message.matched_to_competition = true
-        @incoming_message.competition_id  = @competition.id
-        @incoming_message.matched_to_devotional = false
-
-        if @incoming_message.save!
-
-          @send_response = SendSMS.new
-          @send_response.momt = "MT"
-          @send_response.sender = "7070"
-          @send_response.receiver = sender
-
-          if @matches_option == true
 
             @send_response.msgdata = @competition.success_message
+            @send_response.sms_type = 2
 
-          else
+            if @send_response.save!
+
+
+              @incoming_message.reply_sent = true
+              @incoming_message.save!
+
+            end
+
+
+          end
+
+
+        else
+
+          # The Sender Has the right competition keyword but the option is wrong
+          @incoming_message.matched_to_competition = true
+          @incoming_message.competition_id = @competition.id
+          @incoming_message.reply_message = @competition.incorrect_option_message
+
+          if @incoming_message.save!
+
 
             @send_response.msgdata = @competition.incorrect_option_message
+            @send_response.sms_type = 2
+
+            if @send_response.save!
+
+
+              @incoming_message.reply_sent = true
+              @incoming_message.save!
+
+            end
+
 
           end
 
-          @send_response.sms_type = 2
-
-          if @send_response.save!
-
-            @incoming_message.reply_message = @send_response.msgdata
-            @incoming_message.reply_sent = true
-            @incoming_message.reply_sent_date_time = Time.now
-            @incoming_message.save!
-
-          end
 
         end
 
 
       else
 
-        @incoming_message = IncomingMessage.new
-
-        @incoming_message.sender = sender
-        @incoming_message.keyword = keyword
-        @incoming_message.option = option
-        @incoming_message.extra_text = extra_text
+        # We could not find any competition to match the received text ... so we send thank you
         @incoming_message.matched_to_competition = false
         @incoming_message.matched_to_devotional = false
-
+        @incoming_message.reply_message = message_to_send
 
         if @incoming_message.save!
 
-          @send_response = SendSMS.new
-          @send_response.momt = "MT"
-          @send_response.sender = "7070"
-          @send_response.receiver = sender
+
           @send_response.msgdata = message_to_send
           @send_response.sms_type = 2
 
           if @send_response.save!
 
-            @incoming_message.reply_message = @send_response.msgdata
+
             @incoming_message.reply_sent = true
-            @incoming_message.reply_sent_date_time = Time.now
             @incoming_message.save!
 
           end
 
+
         end
 
+
       end
+
 
     end
 
