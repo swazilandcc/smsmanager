@@ -1,7 +1,7 @@
 %h1.text-info All Received Text Messages
 %br
 %table.table.table-bordered.table-stripped.table-condensed
-  %thead
+  %thead{:style => 'background-color: #f1f1f1'}
     %tr
       %th Sender
       %th Keyword
@@ -19,8 +19,8 @@
       %td= incoming_message.option
       %td= incoming_message.extra_text
       %td= incoming_message.created_at.strftime("%d-%m-%Y %H:%M")
-      %td= incoming_message.reply_sent? ? 'Yes' : 'No'
-      %td= incoming_message.reply_sent_date_time.strftime("%d-%m-%Y %H:%M")
+      %td= incoming_message.reply_sent? ? 'Yes' : 'No' rescue nil
+      %td= incoming_message.reply_sent_date_time.strftime("%d-%m-%Y %H:%M") rescue nil
       -#%td= link_to 'Show', incoming_message, :class => 'btn'
       -#%td= link_to 'Edit', edit_incoming_message_path(incoming_message), :class => 'btn btn-primary'
       -#%td= link_to 'Destroy', incoming_message, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn'

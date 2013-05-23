@@ -24,12 +24,10 @@ class IncomingSmsWorker
         #@send_response.msgdata = mess
         #@send_response.sms_type = 2
 
-        url = URI.parse("http://localhost:13013/cgi-bin/sendsms?username=smsmanager&password=P5ssw0rd&from=7070&to=#{sender}&text=#{message_to_send}&dlr-mask=1+2")
-        req = Net::HTTP::Get.new(url.to_s)
-        res = Net::HTTP.start(url.host, url.port) {|http|
-          http.request(req)
-        }
-        if res.body.to_s.match("Accepted for delivery").nil? == false
+        url = URI.parse(URI.encode("http://localhost:13013/cgi-bin/sendsms?username=smsmanager&password=P5ssw0rd&from=7070&to=#{sender}&text=#{message_to_send}&dlr-mask=1+2"))
+        resp = Net::HTTP.get_response(url)
+
+        if resp.to_s.match("Accepted for delivery").nil? == false
 
           @incoming_message.reply_message = @send_response.msgdata
           @incoming_message.reply_sent = true
