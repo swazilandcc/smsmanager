@@ -22,7 +22,9 @@ class IncomingSmsWorker
 
       @competition = Competition.where("keyword = '#{keyword.to_s.strip.upcase}'").first
 
-      if @competition.nil? == false && @competition.active? == true && @competition.end_date.strftime("%Y-%m-%d") >= Time.now.strftime("%Y-%m-%d") && @competition.start_date.strftime("%Y-%m-%d") <= Time.now.strftime("%Y-%m-%d")
+      if @competition.nil? == false
+
+        if @competition.active? == true && @competition.end_date.strftime("%Y-%m-%d") >= Time.now.strftime("%Y-%m-%d") && @competition.start_date.strftime("%Y-%m-%d") <= Time.now.strftime("%Y-%m-%d")
 
           # We have found a matching keyword from the senders text
 
@@ -108,32 +110,60 @@ class IncomingSmsWorker
 
           end
 
-      elsif @competition.active? == true && @competition.end_date.strftime("%Y-%m-%d") >= Time.now.strftime("%Y-%m-%d") && @competition.start_date.strftime("%Y-%m-%d") > Time.now.strftime("%Y-%m-%d")
-         # The competition hasn't started yet ... notify the sender
-        @incoming_message.matched_to_competition = true
-        @incoming_message.matched_to_devotional = false
-        @incoming_message.competition_id = @competition.id
-        @incoming_message.reply_message = "SMS entry for #{@competition.keyword} is not open yet. Please try again on the #{@competition.start_date.strftime("%d-%m-%Y")}. Thank you.[PRE]"
+        elsif @competition.active? == true && @competition.end_date.strftime("%Y-%m-%d") >= Time.now.strftime("%Y-%m-%d") && @competition.start_date.strftime("%Y-%m-%d") > Time.now.strftime("%Y-%m-%d")
+          # The competition hasn't started yet ... notify the sender
+          @incoming_message.matched_to_competition = true
+          @incoming_message.matched_to_devotional = false
+          @incoming_message.competition_id = @competition.id
+          @incoming_message.reply_message = "SMS entry for #{@competition.keyword} is not open yet. Please try again on the #{@competition.start_date.strftime("%d-%m-%Y")}. Thank you.[PRE]"
 
-        if @incoming_message.save!
-
-
-          @send_response.msgdata = "SMS entry for #{@competition.keyword} is not open yet. Please try again on the #{@competition.start_date.strftime("%d-%m-%Y")}. Thank you."
-          @send_response.sms_type = 2
-
-          if @send_response.save!
+          if @incoming_message.save!
 
 
-            @incoming_message.reply_sent = true
-            @incoming_message.reply_sent_date_time = Time.now
-            @incoming_message.save!
+            @send_response.msgdata = "SMS entry for #{@competition.keyword} is not open yet. Please try again on the #{@competition.start_date.strftime("%d-%m-%Y")}. Thank you."
+            @send_response.sms_type = 2
+
+            if @send_response.save!
+
+
+              @incoming_message.reply_sent = true
+              @incoming_message.reply_sent_date_time = Time.now
+              @incoming_message.save!
+
+            end
+
 
           end
 
 
+        else
+
+          # The competition is either inactive or is now closed
+          @incoming_message.matched_to_competition = false
+          @incoming_message.matched_to_devotional = false
+          @incoming_message.reply_message = @competition.closed_message.to_s + "[CLOSED]"
+
+          if @incoming_message.save!
+
+
+            @send_response.msgdata = @competition.closed_message
+            @send_response.sms_type = 2
+
+            if @send_response.save!
+
+
+              @incoming_message.reply_sent = true
+              @incoming_message.reply_sent_date_time = Time.now
+              @incoming_message.save!
+
+            end
+
+
+          end
+
         end
 
-      elsif @competition.nil? == true
+      else
 
         # We could not find any competition to match the received text ... so we send thank you
         @incoming_message.matched_to_competition = false
@@ -159,32 +189,8 @@ class IncomingSmsWorker
         end
 
 
-      else
-
-        # The competition is either inactive or is now closed
-        @incoming_message.matched_to_competition = false
-        @incoming_message.matched_to_devotional = false
-        @incoming_message.reply_message = @competition.closed_message.to_s + "[CLOSED]"
-
-        if @incoming_message.save!
-
-
-          @send_response.msgdata = @competition.closed_message
-          @send_response.sms_type = 2
-
-          if @send_response.save!
-
-
-            @incoming_message.reply_sent = true
-            @incoming_message.reply_sent_date_time = Time.now
-            @incoming_message.save!
-
-          end
-
-
-        end
-
       end
+
 
     end
 
