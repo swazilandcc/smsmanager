@@ -24,7 +24,7 @@ class BulkSendWorker
         #send sms
         @send_response = SendSMS.new
         @send_response.momt = "MT"
-        @send_response.sender = "7070"
+        @send_response.sender = "SCC"
         @send_response.receiver = contact_cell_number
         @send_response.msgdata = msg
         @send_response.sms_type = 2
