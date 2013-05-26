@@ -39,6 +39,7 @@ end
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'will_paginate', '> 3.0'
 
 group :development do
   gem "better_errors"

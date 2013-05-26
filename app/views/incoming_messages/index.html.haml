@@ -1,5 +1,6 @@
 %h1.text-info All Received Text Messages
 %br
+= will_paginate @incoming_messages
 %table.table.table-bordered.table-stripped.table-condensed
   %thead{:style => 'background-color: #f1f1f1'}
     %tr
@@ -24,3 +25,4 @@
       -#%td= link_to 'Show', incoming_message, :class => 'btn'
       -#%td= link_to 'Edit', edit_incoming_message_path(incoming_message), :class => 'btn btn-primary'
       -#%td= link_to 'Destroy', incoming_message, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn'
+= will_paginate @incoming_messages
