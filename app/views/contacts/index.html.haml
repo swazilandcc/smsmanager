@@ -3,6 +3,8 @@
 .well
   = link_to 'Add New Contact', new_contact_path, :class => 'btn btn-success'
 %br
+=will_paginate @contacts
+%br
 %table.table.table-bordered.table-stripped.table-condensed
   %thead
     %tr
@@ -24,5 +26,6 @@
       %td= link_to "<i class=\"icon-eye-open\"></i> Show".html_safe, contact, :class => 'btn'
       %td= link_to "<i class=\"icon-pencil\"></i> Edit".html_safe, edit_contact_path(contact), :class => 'btn btn-primary'
       %td= link_to "<i class=\"icon-trash\"></i> Delete".html_safe, contact, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
-
+%br
+=will_paginate @contacts
 

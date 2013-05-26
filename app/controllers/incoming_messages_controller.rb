@@ -5,7 +5,7 @@ class IncomingMessagesController < ApplicationController
   # GET /incoming_messages
   # GET /incoming_messages.json
   def index
-    @incoming_messages = IncomingMessage.order("created_at DESC").page(params[:page]).per_page(15)
+    @incoming_messages = IncomingMessage.order("created_at DESC").page(params[:page]).per_page(30)
 
     respond_to do |format|
       format.html # index.html.erb
