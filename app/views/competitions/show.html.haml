@@ -87,7 +87,7 @@
             %th
               Total # of Entries
         %tbody
-        -IncomingMessage.count(:conditions => "competition_id = #{@competition.id}", :group => "sender").each do |sender, count|
+        -IncomingMessage.count(:conditions => "competition_id = #{@competition.id}", :group => "sender", :order => "count_all DESC").each do |sender, count|
           %tr
             %td=sender
             %td=count
