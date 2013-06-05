@@ -14,5 +14,6 @@
         %li=x.group.name
 
 .form-actions
-  = link_to 'Edit', edit_contact_path(@contact), :class => 'btn btn-primary'
+  -if can? :manage, :all
+    = link_to 'Edit', edit_contact_path(@contact), :class => 'btn btn-primary'
   = link_to 'Back', contacts_path, :class => 'btn'

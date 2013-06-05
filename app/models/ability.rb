@@ -3,8 +3,14 @@ class Ability
 
   def initialize(user)
 
-   if user.email == "systemadmin@scc.org.sz"
+   if user.roles[0] == "admin"
      can :manage, :all
+   end
+
+   if user.roles[0] == 'viewer'
+
+     can :read, :all
+
    end
     # Define abilities for the passed in user here. For example:
     #

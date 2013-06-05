@@ -17,9 +17,11 @@
       %td= sms_log.status
       %td= sms_log.user_id
       %td= link_to 'Show', sms_log
-      %td= link_to 'Edit', edit_sms_log_path(sms_log)
-      %td= link_to 'Destroy', sms_log, :method => :delete, :data => { :confirm => 'Are you sure?' }
+      -if can? :manage, :all
+        %td= link_to 'Edit', edit_sms_log_path(sms_log)
+        %td= link_to 'Destroy', sms_log, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
 
-= link_to 'New Sms log', new_sms_log_path
+-if can? :manage, :all
+  = link_to 'New Sms log', new_sms_log_path

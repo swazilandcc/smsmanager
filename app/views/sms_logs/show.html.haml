@@ -13,6 +13,6 @@
   %b User:
   = @sms_log.user_id
 
-= link_to 'Edit', edit_sms_log_path(@sms_log)
-\|
+-if can? :manage, :all
+  = link_to 'Edit', edit_sms_log_path(@sms_log)
 = link_to 'Back', sms_logs_path

@@ -1,7 +1,8 @@
 %h1.text-info Sent Bulk Messages
 %br
-.well
-  = link_to 'Send Bulk Message', new_send_bulk_message_path, :class => 'btn btn-success'
+-if can? :manage, :all
+  .well
+    = link_to 'Send Bulk Message', new_send_bulk_message_path, :class => 'btn btn-success'
 %br
 %table.table.table-bordered.table-condensed.table-stripped
   %thead
@@ -11,7 +12,6 @@
       %th Status
       %th Sent By
       %th Sent Date/Time
-      %th
 
   %tbody
   - @send_bulk_messages.each do |send_bulk_message|

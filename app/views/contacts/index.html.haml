@@ -1,7 +1,8 @@
 %h1.text-info Address Book
 %br
-.well
-  = link_to 'Add New Contact', new_contact_path, :class => 'btn btn-success'
+-if can? :manage, :all
+  .well
+    = link_to 'Add New Contact', new_contact_path, :class => 'btn btn-success'
 %br
 =will_paginate @contacts
 %br
@@ -12,9 +13,6 @@
       %th First name
       %th Last name
       %th Cell number
-      %th
-      %th
-      %th
 
   %tbody
   - @contacts.each do |contact|
@@ -24,8 +22,9 @@
       %td= contact.last_name
       %td= contact.cell_number
       %td= link_to "<i class=\"icon-eye-open\"></i> Show".html_safe, contact, :class => 'btn'
-      %td= link_to "<i class=\"icon-pencil\"></i> Edit".html_safe, edit_contact_path(contact), :class => 'btn btn-primary'
-      %td= link_to "<i class=\"icon-trash\"></i> Delete".html_safe, contact, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+      -if can? :manage, :all
+        %td= link_to "<i class=\"icon-pencil\"></i> Edit".html_safe, edit_contact_path(contact), :class => 'btn btn-primary'
+        %td= link_to "<i class=\"icon-trash\"></i> Delete".html_safe, contact, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
 %br
 =will_paginate @contacts
 

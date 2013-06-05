@@ -12,6 +12,7 @@
       -if y.contact.nil? == false
         %li=y.contact.full_name
 .form-actions
-  = link_to 'Edit', edit_group_path(@group), :class => 'btn btn-success'
+  -if can? :manage, :all
+    = link_to 'Edit', edit_group_path(@group), :class => 'btn btn-success'
   = link_to 'Back', groups_path, :class => 'btn'
 

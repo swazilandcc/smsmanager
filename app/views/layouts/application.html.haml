@@ -73,15 +73,16 @@
                         %a{:href => '/incoming_messages'}
                           All Incoming Messages
 
-                %li.dropdown
-                  %a{:href => "#", "data-toggle" => "dropdown"}
-                    %i.icon-wrench
-                    Settings
-                    %b.caret
-                    %ul.dropdown-menu
-                      %li
-                        %a{:href => '/users'}
-                          System Users
+                -if can? :manage, :all
+                  %li.dropdown
+                    %a{:href => "#", "data-toggle" => "dropdown"}
+                      %i.icon-wrench
+                      Settings
+                      %b.caret
+                      %ul.dropdown-menu
+                        %li
+                          %a{:href => '/users'}
+                            System Users
 
                 %ul.pull-right.nav
                   -if current_user.nil? == false

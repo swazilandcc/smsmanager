@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   has_many :sms_logs
   has_many :competitions
 
-  ROLES = %w[admin user]
+  ROLES = %w[admin viewer]
 
   def roles=(roles)
     self.role_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.sum
