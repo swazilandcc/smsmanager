@@ -10,6 +10,7 @@ class IncomingMessagesController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @incoming_messages }
+      format.xls
     end
   end
 

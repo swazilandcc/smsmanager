@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:o="urn:schemas-microsoft-com:office:office"
+          xmlns:x="urn:schemas-microsoft-com:office:excel"
+          xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+          xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell>
+          <Data ss:Type="String">Total SMS</Data>
+        </Cell>
+        <Cell>
+          <Data ss:Type="Number"><% @incoming_messages.count rescue nil %></Data>
+        </Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Sender</Data></Cell>
+        <Cell><Data ss:Type="String">Keyword</Data></Cell>
+        <Cell><Data ss:Type="String">Option</Data></Cell>
+        <Cell><Data ss:Type="String">Extra text</Data></Cell>
+        <Cell><Data ss:Type="String">Received Date / Time</Data></Cell>
+        <Cell><Data ss:Type="String">Reply Sent</Data></Cell>
+        <Cell><Data ss:Type="String">Reply Send Date / Time</Data></Cell>
+      </Row>
+      <% @incoming_messages.each do |incoming_message| %>
+          <Row>
+            <Cell><Data ss:Type="Number"><%= incoming_message.sender %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= incoming_message.keyword %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= incoming_message.option %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= incoming_message.extra_text %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= incoming_message.created_at.strftime("%d-%m-%Y %H:%M") %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= incoming_message.reply_sent? ? 'Yes' : 'No' rescue nil %></Data></Cell>
+            <Cell><Data ss:Type="String"><%= incoming_message.reply_sent_date_time.strftime("%d-%m-%Y %H:%M") rescue nil %></Data></Cell>
+          </Row>
+      <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

@@ -1,5 +1,9 @@
 %h1.text-info All Received Text Messages
 %br
+%p
+  Download:
+  =link_to 'Export to Excel', incoming_messages_path(format: "xls")
+%br
 = will_paginate @incoming_messages
 %table.table.table-bordered.table-stripped.table-condensed
   %thead{:style => 'background-color: #f1f1f1'}
