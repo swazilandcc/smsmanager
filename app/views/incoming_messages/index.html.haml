@@ -2,7 +2,7 @@
 %br
 %p
   Download:
-  =link_to 'Export to Excel', incoming_messages_path(format: "xls")
+  =link_to 'Export to Excel', {:controller => :incoming_messages, :action => :genExcel, :format => "xls"}
 %br
 = will_paginate @incoming_messages
 %table.table.table-bordered.table-stripped.table-condensed

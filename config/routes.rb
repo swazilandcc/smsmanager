@@ -4,9 +4,6 @@ Smsmanager::Application.routes.draw do
 
   resources :competitions
 
-
-
-
   authenticate :user do
 
     mount Sidekiq::Web, at: "/sidekiq"
@@ -32,7 +29,7 @@ Smsmanager::Application.routes.draw do
 
   resources :contacts
 
-
+  match 'incoming_messages/genExcel' => 'incoming_messages#genExcel'
   match 'incoming_messages/receive' => 'incoming_messages#receive'
   resources :incoming_messages
 

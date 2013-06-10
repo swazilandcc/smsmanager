@@ -14,6 +14,15 @@ class IncomingMessagesController < ApplicationController
     end
   end
 
+  def genExcel
+    @incoming_messages = IncomingMessage.order("created_at DESC").all
+
+    respond_to do |format|
+      format.xls
+    end
+
+  end
+
   # GET /incoming_messages/1
   # GET /incoming_messages/1.json
   def show
