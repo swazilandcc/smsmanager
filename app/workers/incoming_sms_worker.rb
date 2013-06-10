@@ -20,7 +20,7 @@ class IncomingSmsWorker
       @send_response.sender = "7070"
       @send_response.receiver = sender
 
-      @competition = Competition.where("keyword = '#{keyword.to_s.strip.upcase}'").first
+      @competition = Competition.where(:keyword => keyword.to_s.strip.upcase).first
 
       if @competition.nil? == false
 
@@ -28,7 +28,7 @@ class IncomingSmsWorker
 
           # We have found a matching keyword from the senders text
 
-          @competition_options = @competition.competition_options.where("option_number = #{option.to_i}").first
+          @competition_options = @competition.competition_options.where(:option_number => option.to_i).first
 
           if @competition_options.nil? == false
 
