@@ -32,16 +32,22 @@ class IncomingSmsWorker
 
           if @competition_options.nil? == false
 
+            @rndString = ''
+
+            if @competition.response_include_serial == true
+              o =  [('A'..'Z'),(0..9)].map{|i| i.to_a}.flatten
+              @rndString = "#".to_s + (0...5).map{ o[rand(o.length)] }.join.to_s
+            end
+
 
             # The Sender Has the right competition keyword and the option is right
             @incoming_message.matched_to_competition = true
             @incoming_message.competition_id = @competition.id
-            @incoming_message.reply_message = @competition.success_message
+            @incoming_message.reply_message = @competition.success_message.to_s + @rndString.to_s
 
             if @incoming_message.save!
 
-
-              @send_response.msgdata = @competition.success_message
+              @send_response.msgdata = @competition.success_message.to_s + @rndString.to_s
               @send_response.sms_type = 2
 
               if @send_response.save!

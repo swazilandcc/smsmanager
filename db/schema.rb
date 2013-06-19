@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130523144837) do
+ActiveRecord::Schema.define(:version => 20130619092430) do
 
   create_table "bulk_message_templates", :force => true do |t|
     t.string   "name"
@@ -52,6 +52,8 @@ ActiveRecord::Schema.define(:version => 20130523144837) do
     t.string   "cell_number"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "region_id"
+    t.string   "church"
   end
 
   add_index "contacts", ["cell_number"], :name => "index_contacts_on_cell_number"
@@ -86,6 +88,14 @@ ActiveRecord::Schema.define(:version => 20130523144837) do
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
   end
+
+  create_table "regions", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "regions", ["id"], :name => "index_regions_on_id"
 
   create_table "send_bulk_messages", :force => true do |t|
     t.integer  "group_id"

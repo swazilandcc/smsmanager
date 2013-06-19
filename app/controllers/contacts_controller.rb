@@ -3,12 +3,23 @@ class ContactsController < ApplicationController
   # GET /contacts
   # GET /contacts.json
   def index
-    @contacts = Contact.order("first_name").page(params[:page]).per_page(30)
+    @q = Contact.search(params[:q])
+    @contacts = @q.result.order("first_name").page(params[:page]).per_page(30)
+    #@contacts = Contact.order("first_name").page(params[:page]).per_page(30)
 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @contacts }
     end
+  end
+
+  def genExcel
+    @contacts = Contact.order("first_name DESC").all
+
+    respond_to do |format|
+      format.xls
+    end
+
   end
 
   # GET /contacts/1

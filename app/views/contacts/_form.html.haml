@@ -8,6 +8,9 @@
         = f.input :first_name, :label => 'First Name'
         = f.input :last_name, :label => 'Last Name'
         = f.input :cell_number, :label => 'Cell Number (7xxxxxx)'
+        = f.input :church, :label => "Name of Church"
+        = f.input :region_id, :collection => Region.all, :prompt => "Select Region", :label => "Region"
+
       .span5.customArea
         %h4 Group Membership
         = hidden_field_tag "contact[group_ids][]", nil

@@ -1,8 +1,40 @@
 %h1.text-info Address Book
 %br
+.well
+  %h4 Search Contacts
+  %br
+  = search_form_for @q do |f|
+    %table.table.table-bordered.table-condensed.table-stripped
+      %thead
+        %tr
+          %th
+            = f.label "First Name"
+          %th
+            = f.label "Last Name"
+          %th
+            = f.label "Region"
+          %th
+            = f.label "Church Name"
+          %th
+
+      %tbody
+        %tr
+          %td
+            = f.text_field :first_name_cont
+          %td
+            = f.text_field :last_name_cont
+          %td
+            = f.text_field :region_name_cont
+          %td
+            = f.text_field :church_cont
+          %td
+            = f.submit :class => 'btn btn-small btn-success'
+%br
 -if can? :manage, :all
   .well
     = link_to 'Add New Contact', new_contact_path, :class => 'btn btn-success'
+    |
+    =link_to 'Export to Excel', {:controller => :contacts, :action => :genExcel, :format => "xls"}, :class => 'btn btn-info'
 %br
 =will_paginate @contacts
 %br

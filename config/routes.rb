@@ -2,6 +2,9 @@ require 'sidekiq/web'
 
 Smsmanager::Application.routes.draw do
 
+  resources :regions
+
+
   resources :competitions
 
   authenticate :user do
@@ -25,6 +28,8 @@ Smsmanager::Application.routes.draw do
 
 
   resources :groups
+
+  match 'contacts/genExcel' => 'contacts#genExcel'
 
 
   resources :contacts

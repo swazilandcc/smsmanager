@@ -1,0 +1,7 @@
+%p
+  %b Name:
+  = @region.name
+
+.form-actions
+  = link_to 'Edit', edit_region_path(@region), :class => 'btn btn-primary'
+  = link_to 'Back', regions_path, :class => 'btn'

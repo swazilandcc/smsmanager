@@ -1,0 +1,21 @@
+%h1 Listing Regions
+%br
+%table.table.table-bordered.table-condensed.table-stripped
+  %thead
+    %tr
+      %th Name
+      %th
+      %th
+      %th
+
+  - @regions.each do |region|
+    %tbody
+      %tr
+        %td= region.name
+        %td= link_to 'Show', region, :class => 'btn'
+        %td= link_to 'Edit', edit_region_path(region), :class => 'btn btn-primary'
+        %td= link_to 'Delete', region, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+
+%br
+.well
+  = link_to 'New Region', new_region_path, :class => 'btn btn-success'
