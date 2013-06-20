@@ -42,7 +42,18 @@ class IncomingMessagesController < ApplicationController
     option = params[:option] rescue nil
     extra_text = params[:extra_text] rescue nil
 
-    IncomingSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your message has been successfully received. Thank you!')
+    if keyword.downcase == "vod"
+
+      DailyVerseWorker.perform_async(sender, keyword, option, extra_text, 'Your message has been successfully received. Thank you!')
+
+
+    else
+
+      IncomingSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your message has been successfully received. Thank you!')
+
+    end
+
+
     render text: "OK"
 
   end
