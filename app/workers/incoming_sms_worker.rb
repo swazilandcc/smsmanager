@@ -64,15 +64,23 @@ class IncomingSmsWorker
 
           elsif @competition_options.nil? == true && @competition.competition_options.exists? == false
 
+
+            @rndString = ''
+
+            if @competition.response_include_serial == true
+              o =  [('A'..'Z'),(0..9)].map{|i| i.to_a}.flatten
+              @rndString = "#".to_s + (0...5).map{ o[rand(o.length)] }.join.to_s
+            end
+
             # There was not option defined for the competition so this is considered as a successful message
             @incoming_message.matched_to_competition = true
             @incoming_message.competition_id = @competition.id
-            @incoming_message.reply_message = @competition.success_message
+            @incoming_message.reply_message = @competition.success_message.to_s + @rndString.to_s
 
             if @incoming_message.save!
 
 
-              @send_response.msgdata = @competition.success_message
+              @send_response.msgdata = @competition.success_message.to_s + @rndString.to_s
               @send_response.sms_type = 2
 
               if @send_response.save!
