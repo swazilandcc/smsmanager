@@ -42,7 +42,7 @@ jQuery ->
               while i < data.results.length
                 rptTable += "<tr>"
                 rptTable += "<td>" + data.results[i].cell_number + "</td>"
-                rptTable += "<td>" + data.results[i].created_at + "</td>"
+                rptTable += "<td>" + data.results[i].send_date + "</td>"
                 rptTable += "<td>" + data.results[i].user_id + "</td>"
                 rptTable += "</tr>"
                 i++

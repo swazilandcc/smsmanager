@@ -43,7 +43,7 @@ class DashboardController < ApplicationController
          UNION ALL SELECT 23) AS h
   LEFT OUTER
     JOIN incoming_messages
-      ON EXTRACT(HOUR FROM DATE_FORMAT(created_at, "%H:%i")) = h.theHour
+      ON EXTRACT(HOUR FROM DATE_FORMAT(created_at, "%H:%I")) = h.theHour
      AND DATE(created_at) = DATE_FORMAT(NOW(), "%Y-%m-%d")
   GROUP
     BY h.theHour})
@@ -86,7 +86,7 @@ class DashboardController < ApplicationController
 
         @sms_report.each do |sms|
 
-          @results_fixed << {cell_number: "#{sms.cell_number}", send_date: "#{sms.created_at.strftime("%d-%m-%Y %H:%i")}", user_id: "#{User.find(sms.user_id).first_name.to_s + " " + User.find(sms.user_id).last_name.to_s }" }
+          @results_fixed << {cell_number: "#{sms.cell_number}", send_date: "#{sms.created_at.strftime("%d-%m-%Y %H:%I")}", user_id: "#{User.find(sms.user_id).first_name.to_s + " " + User.find(sms.user_id).last_name.to_s }" }
 
         end
 
@@ -97,7 +97,7 @@ class DashboardController < ApplicationController
             csv << ["cell_number", "send_date", "sent_by"]
             # data rows
             @sms_report.each do |sms|
-              csv << [sms.cell_number, sms.created_at.strftime("%d-%m-%Y %H:%i"), User.find(sms.user_id).first_name.to_s + " " + User.find(sms.user_id).last_name.to_s]
+              csv << [sms.cell_number, sms.created_at.strftime("%d-%m-%Y %H:%M"), User.find(sms.user_id).first_name.to_s + " " + User.find(sms.user_id).last_name.to_s]
             end
           end
 
@@ -138,7 +138,7 @@ class DashboardController < ApplicationController
 
         @sms_report.each do |sms|
 
-          @results_fixed << {cell_number: "#{sms.cell_number}", send_date: "#{sms.created_at.strftime("%d-%m-%Y %H:%i")}", user_id: "#{User.find(sms.user_id).first_name.to_s + " " + User.find(sms.user_id).last_name.to_s }" }
+          @results_fixed << {cell_number: "#{sms.cell_number}", send_date: "#{sms.created_at.strftime("%d-%m-%Y %H:%I")}", user_id: "#{User.find(sms.user_id).first_name.to_s + " " + User.find(sms.user_id).last_name.to_s }" }
 
         end
 
