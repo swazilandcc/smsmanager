@@ -12,6 +12,7 @@ class IncomingMessagesController < ApplicationController
       format.json { render json: @incoming_messages }
       format.xls
     end
+
   end
 
   def genExcel
@@ -32,6 +33,7 @@ class IncomingMessagesController < ApplicationController
       format.html # show.html.erb
       format.json { render json: @incoming_message }
     end
+
   end
 
   # Process Incoming SMS Message

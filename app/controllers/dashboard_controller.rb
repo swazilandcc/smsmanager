@@ -63,6 +63,95 @@ class DashboardController < ApplicationController
       end
 
 
+  end
+
+  def bulksms_report
+
+
+
+  end
+
+  def downloadBulkSMSReport
+
+    @start_date = params[:dateFrom] rescue nil
+    @end_date = params[:dateTo] rescue nil
+
+    @results_fixed = []
+
+    respond_to do |format|
+
+      if @start_date.nil? == false && @end_date.nil? == false
+
+        @sms_report = SmsLog.all(:conditions => "created_at BETWEEN '#{@start_date} 00:00' AND '#{@end_date} 23:59'")
+
+        @sms_report.each do |sms|
+
+          @results_fixed << {cell_number: "#{sms.cell_number}", send_date: "#{sms.created_at.strftime("%d-%m-%Y %H:%i")}", user_id: "#{User.find(sms.user_id).first_name.to_s + " " + User.find(sms.user_id).last_name.to_s }" }
+
+        end
+
+        format.html do
+
+          csv_string = CSV.generate do |csv|
+            # header row
+            csv << ["cell_number", "send_date", "sent_by"]
+            # data rows
+            @sms_report.each do |sms|
+              csv << [sms.cell_number, sms.created_at.strftime("%d-%m-%Y %H:%i"), User.find(sms.user_id).first_name.to_s + " " + User.find(sms.user_id).last_name.to_s]
+            end
+          end
+
+
+
+          # send it to the browser
+          send_data csv_string,
+                    :type => 'text/csv; charset=iso-8859-1; header=present',
+                    :disposition => "attachment; filename=bulksms_report_#{@start_date}_#{@end_date}.csv"
+
+
+        end
+
+
+      else
+
+          format.js { render js: "alert('Unable to Generate Report! Please check all required fields are entered')"}
+
+      end
+
     end
+
+  end
+
+
+  def getBulkSMSReport
+
+    @start_date = params[:start_date] rescue nil
+    @end_date = params[:end_date] rescue nil
+
+    @results_fixed = []
+
+    respond_to do |format|
+
+      if @start_date.nil? == false && @end_date.nil? == false
+
+        @sms_report = SmsLog.all(:conditions => "created_at BETWEEN '#{@start_date} 00:00' AND '#{@end_date} 23:59'")
+
+        @sms_report.each do |sms|
+
+          @results_fixed << {cell_number: "#{sms.cell_number}", send_date: "#{sms.created_at.strftime("%d-%m-%Y %H:%i")}", user_id: "#{User.find(sms.user_id).first_name.to_s + " " + User.find(sms.user_id).last_name.to_s }" }
+
+        end
+
+        format.json { render json: {:results => @results_fixed}}
+
+      else
+
+        format.js { render js: "alert('Unable to Generate Report! Please check all required fields are entered')"}
+
+      end
+
+    end
+
+  end
 
 end

@@ -22,3 +22,10 @@
 
 }
 
+.noStyle tbody {
+
+    background-color: transparent !important;
+    vertical-align: middle;
+
+}
+

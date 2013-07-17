@@ -16,6 +16,10 @@ Smsmanager::Application.routes.draw do
 
   resources :sms_logs
 
+  match '/dashboard/bulksms_report' => 'dashboard#bulksms_report'
+  match '/dashboard/downloadBulkSMSReport' => 'dashboard#downloadBulkSMSReport'
+  post '/dashboard/getBulkSMSReport' => 'dashboard#getBulkSMSReport'
+
   post '/dashboard/fhLoad' => 'dashboard#fhLoad'
 
   match "/bulk_message_templates/getMessage" => "bulk_message_templates#getMessage"
