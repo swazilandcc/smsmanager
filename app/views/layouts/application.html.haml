@@ -74,7 +74,9 @@
                     %ul.dropdown-menu
                       %li
                         %a{:href => '/incoming_messages'}
-                          All Incoming Messages
+                          All Incoming SMS List
+                        %a{:href => '/dashboard/incomingsms_report'}
+                          Incoming SMS Report (Exportable)
 
                 -if can? :manage, :all
                   %li.dropdown

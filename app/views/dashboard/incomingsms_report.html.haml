@@ -1,0 +1,29 @@
+%h1.text-info Incoming SMS Report
+%hr
+.alert
+  %i Select the start and end date of the report you want to generate. Please make sure the end date is greater than the start date to avoid errors.
+  %br
+  %br
+  %table.noStyle
+    %tr
+      %td
+        From:
+      %td
+        =text_field_tag "from"
+      %td
+        To:
+      %td
+        =text_field_tag "to"
+    %tr
+      %td
+
+      %td{:colspan => 4}
+        #rptFltr
+
+  #errorMessage
+=link_to "Generate Report", "#", :class => "btn btn-success", :id => "genIncomingReport"
+%br
+%br
+#ResultCount
+#reportResult
+
