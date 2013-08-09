@@ -1,0 +1,5 @@
+-if @contact.nil? == false
+  var contactForm = "#{escape_javascript(render :partial => "add_contact")}";
+  $('#importContactInfo').html(contactForm)
+  $('#entry').val(#{@contact.cell_number})
+  $('#importContact').modal('show');

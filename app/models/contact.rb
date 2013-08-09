@@ -11,8 +11,12 @@ class Contact < ActiveRecord::Base
 
   def full_name
 
-    return self.title + self.first_name + " " + self.last_name + " - " + self.cell_number
+    return self.title + " " + self.first_name + " " + self.last_name + " - " + self.cell_number
 
+  end
+
+  def complete_name
+    return self.title + " " + self.first_name + " " + self.last_name
   end
 
   def self.to_csv(options = {})

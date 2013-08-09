@@ -89,7 +89,13 @@
         %tbody
         -IncomingMessage.count(:conditions => "competition_id = #{@competition.id}", :group => "sender", :order => "count_all DESC").each do |sender, count|
           %tr
-            %td=sender
+            %td
+              = sender
+              -@contact =  Contact.find_by_cell_number(sender.to_s[4..-1]) rescue nil
+              -if @contact.nil? == true
+                = link_to "Import Contact", "/dashboard/import_contact/#{sender.to_s[4..-1]}", :class => 'btn btn-small btn-success', :id => "#{sender.to_s[4..-1]}", :remote => true
+              -else
+                = link_to "#{@contact.complete_name}", '#'
             %td=count
 
       -@competition.competition_options.exists? == true
@@ -115,11 +121,18 @@
     -#  %h4.text-info Competition Winners
 
 
-
-
-
-
 .form-action
   -if can? :manage, :all
     = link_to 'Edit', edit_competition_path(@competition), :class => 'btn btn-primary'
   = link_to 'Back', competitions_path, :class => 'btn'
+
+#importContact.hide.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "importContactLogLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3#importContactLogLabel Import Selected Contact
+  .modal-body
+    #importContactInfo{:style => 'background-color: #f1f1f1; font-size: 11px;'}
+    %input{:type => "hidden", :value => "", :id => "entry"}
+    %input{:type => "hidden", :value => "false", :id => "saved"}
+  .modal-footer
+    %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal", :id => "closeImportContact"} Close

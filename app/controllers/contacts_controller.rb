@@ -56,11 +56,24 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       if @contact.save
-        format.html { redirect_to @contact, notice: 'Contact was successfully created.' }
-        format.json { render json: @contact, status: :created, location: @contact }
+        if params[:format].nil? == false
+
+          format.js { render js: "$('#importContactInfo').html('<h3>Contact Imported Successfully!<h3>'); $('#saved').val('true');" }
+
+        else
+          format.html { redirect_to @contact, notice: 'Contact was successfully created.' }
+          format.json { render json: @contact, status: :created, location: @contact }
+        end
       else
-        format.html { render action: "new" }
-        format.json { render json: @contact.errors, status: :unprocessable_entity }
+        if params[:format].nil? == false
+
+          format.js { render js: "alert('Unable to import contact: #{@contact.errors}')"}
+
+        else
+          format.html { render action: "new" }
+          format.json { render json: @contact.errors, status: :unprocessable_entity }
+        end
+
       end
     end
   end

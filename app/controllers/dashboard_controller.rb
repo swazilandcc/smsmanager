@@ -127,6 +127,14 @@ class DashboardController < ApplicationController
 
   end
 
+  def import_contact
+    @contact = Contact.new
+    @contact.cell_number = params[:cell_number]
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def downloadIncomingSMSReport
     @start_date = params[:dateFrom] rescue nil
     @end_date = params[:dateTo] rescue nil
