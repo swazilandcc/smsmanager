@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130619092430) do
+ActiveRecord::Schema.define(:version => 20131127180959) do
 
   create_table "bulk_message_templates", :force => true do |t|
     t.string   "name"
@@ -87,6 +87,56 @@ ActiveRecord::Schema.define(:version => 20130619092430) do
     t.integer  "competition_id"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
+    t.boolean  "matched_to_quiz"
+  end
+
+  create_table "quiz_entries", :force => true do |t|
+    t.integer  "quiz_id"
+    t.string   "cell_number"
+    t.boolean  "completed"
+    t.integer  "current_question"
+    t.integer  "incoming_message_id"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+  end
+
+  create_table "quiz_entry_answers", :force => true do |t|
+    t.integer  "quiz_entry_id"
+    t.integer  "quiz_question_id"
+    t.integer  "quiz_question_answer_id"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
+  create_table "quiz_question_answers", :force => true do |t|
+    t.integer  "quiz_question_id"
+    t.string   "letter"
+    t.text     "answer"
+    t.boolean  "correct_answer"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
+  end
+
+  add_index "quiz_question_answers", ["quiz_question_id"], :name => "index_quiz_question_answers_on_quiz_question_id"
+
+  create_table "quiz_questions", :force => true do |t|
+    t.integer  "quiz_id"
+    t.text     "question"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "quiz_questions", ["quiz_id"], :name => "index_quiz_questions_on_quiz_id"
+
+  create_table "quizzes", :force => true do |t|
+    t.string   "keyword"
+    t.text     "welcome_message"
+    t.text     "correct_answer"
+    t.text     "incorrect_answer"
+    t.boolean  "enabled"
+    t.boolean  "next_on_incorrect"
+    t.datetime "created_at",        :null => false
+    t.datetime "updated_at",        :null => false
   end
 
   create_table "regions", :force => true do |t|

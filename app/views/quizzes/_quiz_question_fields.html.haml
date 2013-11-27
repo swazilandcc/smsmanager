@@ -1,0 +1,18 @@
+%fieldset
+  %hr
+  %table.table.table-bordered.table-condensed
+    %tbody
+      %tr
+        %td
+          = f.input :question, :input_html => {:cols => 6, :rows => 3}
+        %td
+          = f.hidden_field :_destroy
+          = link_to "Remove", '#', class: "btn btn-small btn-danger remove_fields"
+      %tr
+        %td{:colspan => 2}
+          = f.fields_for :quiz_question_answers do |builder|
+            = render 'quiz_question_answer_fields', f: builder
+          = link_to_add_fields "Add Answer", f, :quiz_question_answers
+
+
+

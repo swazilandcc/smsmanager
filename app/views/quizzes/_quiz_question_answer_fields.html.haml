@@ -1,0 +1,21 @@
+%fieldset
+  %table.table.table-bordered.table-condensed
+    %thead
+      %tr
+        %th Letter
+        %th Answer
+        %th Correct Answer for Question (Only One per Question)
+        %th
+    %tbody
+      %tr
+        %td
+          =f.input :letter, :label => false
+        %td
+          =f.input :answer, :input_html => {:cols => 3, :rows => 2}, :label => false
+        %td
+          =f.input :correct_answer, :label => false
+        %td
+          = f.hidden_field :_destroy
+          = link_to "Remove", '#', class: "btn btn-small btn-danger remove_fields"
+
+

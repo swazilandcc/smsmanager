@@ -1,0 +1,29 @@
+= simple_form_for(@quiz) do |f|
+  = f.error_notification
+
+  .span9
+    %hr
+    %h3.text-info Quiz Details
+    %br
+    .form-inputs
+      .span5
+        = f.input :keyword
+        = f.input :welcome_message, :input_html => {:cols => 6, :rows => 3}
+        = f.input :correct_answer, :input_html => {:cols => 6, :rows => 3}
+      .span4
+        = f.input :incorrect_answer, :input_html => {:cols => 6, :rows => 3}
+        = f.input :next_on_incorrect, :label => 'Move to Next Question on Incorrect Answer'
+        = f.input :enabled
+
+  .span9.well
+    %hr
+    %h3.text-info Quiz Questions
+    =f.fields_for :quiz_questions do |builder|
+      = render 'quiz_question_fields', f: builder
+    %hr
+    = link_to_add_fields "Add Question", f, :quiz_questions
+
+  .span9
+    .form-actions
+      = f.button :submit, :class => 'btn btn-warning'
+      = link_to 'Back', quizzes_path, :class => 'btn'

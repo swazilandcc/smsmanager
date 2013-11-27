@@ -1,0 +1,50 @@
+.container
+  %h2.text-success SMS Quiz
+  .span12
+    .span5
+      %p
+        %b Keyword:
+        = @quiz.keyword
+      %p
+        %b Welcome Message:
+        = @quiz.welcome_message
+      %p
+        %b Correct Answer Message:
+        = @quiz.correct_answer
+      %p
+        %b Incorrect Answer Message:
+        = @quiz.incorrect_answer
+      %p
+        %b Enabled:
+        = @quiz.enabled
+      %p
+        %b Move to next Question on Incorrect Answer:
+        = @quiz.next_on_incorrect
+    .span6
+      .well
+        %h3.text-info Questions (# #{@quiz.quiz_questions.count()})
+        %table.table.table-bordered.table-condensed.table-stripped
+          %thead
+            %tr
+              %th
+                Question
+              %th
+                Answers
+          %tbody
+            -@quiz.quiz_questions.all().each do |question|
+              %tr
+                %td
+                  =question.question
+                %td
+                  -question.quiz_question_answers.all().each do |answer|
+                    -if answer.correct_answer == true
+                      %div{:style => 'color: green; background-color: white'}
+                        %b #{answer.letter}. #{answer.answer}
+                        %br
+                    -else
+                      #{answer.letter}. #{answer.answer}
+                      %br
+.span12
+  .form-actions
+    = link_to 'Edit', edit_quiz_path(@quiz), :class => 'btn btn-primary'
+    = link_to 'Back', quizzes_path, :class => 'btn'

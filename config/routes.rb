@@ -2,6 +2,9 @@ require 'sidekiq/web'
 
 Smsmanager::Application.routes.draw do
 
+  resources :quizzes
+
+
   resources :regions
 
 

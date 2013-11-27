@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  keyword: MyString
+  welcome_message: MyText
+  correct_answer: MyText
+  incorrect_answer: MyText
+  enabled: false
+  next_on_incorrect: false
+
+two:
+  keyword: MyString
+  welcome_message: MyText
+  correct_answer: MyText
+  incorrect_answer: MyText
+  enabled: false
+  next_on_incorrect: false

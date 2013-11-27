@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  quiz_id: 1
+  cell_number: MyString
+  completed: false
+  current_question: 1
+  incoming_message_id: 1
+
+two:
+  quiz_id: 1
+  cell_number: MyString
+  completed: false
+  current_question: 1
+  incoming_message_id: 1

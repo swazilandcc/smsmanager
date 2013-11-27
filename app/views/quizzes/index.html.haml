@@ -1,0 +1,31 @@
+%h1 Listing SMS Quiz
+
+%table.table.table-bordered.table-condensed.table-stripped
+  %thead
+    %tr
+      %th Keyword
+      %th Welcome message
+      %th Correct answer
+      %th Incorrect answer
+      %th Enabled
+      %th Next on incorrect
+      %th
+      %th
+      %th
+
+  - @quizzes.each do |quiz|
+    %tbody
+      %tr
+        %td= quiz.keyword
+        %td= quiz.welcome_message
+        %td= quiz.correct_answer
+        %td= quiz.incorrect_answer
+        %td= quiz.enabled
+        %td= quiz.next_on_incorrect
+        %td= link_to 'Show', quiz, :class => 'btn'
+        %td= link_to 'Edit', edit_quiz_path(quiz), :class => 'btn btn-primary'
+        %td= link_to 'Destroy', quiz, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+
+%br
+
+= link_to 'New Quiz', new_quiz_path, :class => 'btn btn-successful'
