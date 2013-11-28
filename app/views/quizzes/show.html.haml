@@ -59,8 +59,10 @@
               =question.question
               %br
               %b Answer: #{QuizQuestionAnswer.find_by_quiz_question_id(question.id).letter}). #{QuizQuestionAnswer.find_by_quiz_question_id(question.id).answer}
-              -answer_is_correct = question.quiz_question_answers.where('correct_answer = 1')
+              -answer_is_correct = question.quiz_question_answers.where("letter = '#{QuizQuestionAnswer.find_by_quiz_question_id(question.id).letter}' AND correct_answer = 1")
               %b This answer is #{answer_is_correct.nil? ? 'Incorrect' : 'Correct'}
+              %br
+              %br
 
 
 .span11
