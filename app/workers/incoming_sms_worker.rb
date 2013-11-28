@@ -4,13 +4,16 @@ class IncomingSmsWorker
 
   def perform(sender, keyword, option, extra_text, message_to_send)
 
-    @check_if_quiz = Quiz.where(:keyword => keyword.to_s.strip.upcase).first rescue nil
+    @check_if_quiz = Quiz.where(:keyword => keyword.to_s.strip.upcase) rescue nil
+    @check_if_competition = Competition.where(:keyword => keyword.to_s.strip.upcase) rescue nil
 
     if @check_if_quiz.nil? == false
 
       quiz(sender, keyword, option, extra_text, message_to_send)
 
-    else
+    end
+
+    if @check_if_competition.nil? == false
 
       normal_incoming(sender, keyword, option, extra_text, message_to_send)
 
