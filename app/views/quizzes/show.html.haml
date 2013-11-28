@@ -58,12 +58,13 @@
             -QuizQuestion.find_all_by_quiz_id(x.quiz_id).each do |question|
               =question.question
               %br
-              -QuizEntryAnswer.find_all_by_quiz_question_id(question.id).each do |answer|
+              -QuizEntryAnswer.find_all_by_quiz_question_id_and_quiz_entry_id(question.id, x.id).each do |answer|
                 -received_answer = QuizQuestionAnswer.find(answer.quiz_question_answer_id)
                 %b Answer: #{received_answer.letter}). #{received_answer.answer}
                 %br
                 -correct_answer = QuizQuestionAnswer.find_by_quiz_question_id_and_correct_answer(question.id, 1)
                 %b Is this answer correct? #{correct_answer.letter == received_answer.letter}
+                %br
               %br
               %br
 
