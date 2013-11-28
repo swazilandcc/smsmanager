@@ -60,7 +60,12 @@
               %br
               %b Answer: #{QuizQuestionAnswer.find_by_quiz_question_id(question.id).letter}). #{QuizQuestionAnswer.find_by_quiz_question_id(question.id).answer}
               -answer_is_correct = question.quiz_question_answers.where("letter = '#{QuizQuestionAnswer.find_by_quiz_question_id(question.id).letter}' AND correct_answer = 1")
-              %b This answer is #{answer_is_correct.nil? ? 'Incorrect' : 'Correct'}
+              %br
+              -if answer_is_correct.nil? == false
+                -@color = 'green'
+              -else
+                -@color = 'red'
+              %b{:style => "color: #{@color};"} This answer is #{answer_is_correct.nil? ? 'Incorrect' : 'Correct'}
               %br
               %br
 
