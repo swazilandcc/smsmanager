@@ -1,3 +1,7 @@
+require 'sms_quiz_worker'
+require 'incoming_sms_worker'
+require 'daily_verse_worker'
+
 class IncomingMessagesController < ApplicationController
   skip_before_filter :authenticate_user!, :only => [:receive]
 
@@ -56,7 +60,7 @@ class IncomingMessagesController < ApplicationController
 
       if @check_if_quiz.nil? == false && @check_if_competition.nil? == true
 
-        QuizWorker.perform_async(sender, keyword, option, extra_text, 'Your quiz response has been successfully received. Thank you!')
+        SmsQuizWorker.perform_async(sender, keyword, option, extra_text, 'Your quiz response has been successfully received. Thank you!')
 
       end
 

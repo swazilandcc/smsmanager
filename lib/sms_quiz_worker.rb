@@ -1,4 +1,4 @@
-class QuizWorker
+class SmsQuizWorker
   include Sidekiq::Worker
 
   def perform(sender, keyword, option, extra_text, message_to_send)
