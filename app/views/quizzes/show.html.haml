@@ -42,7 +42,28 @@
                     -else
                       #{answer.letter}. #{answer.answer}
                       %br
-.span12
+.span11.well
+  %h3.text-info Quiz Entries
+  %table.table.table-bordered.table-condensed.table-stripped
+    %thead
+      %tr
+        %th Cell Number
+        %th Question & Answers
+    %tbody
+      -QuizEntry.find_all_by_quiz_id(@quiz.id).each do |x|
+        %tr
+          %td
+            =x.cell_number
+          %td
+            -QuizQuestion.find_all_by_quiz_id(@quiz.id).each do |question|
+              =question.question
+              %br
+              %b Answer: #{QuizQuestionAnswer.find_by_quiz_question_id(question.id).letter}). #{QuizQuestionAnswer.find_by_quiz_question_id(question.id).answer}
+              -answer_is_correct = question.quiz_question_answers.where('correct_answer = 1')
+              %b This answer is #{answer_is_correct.nil? ? 'Incorrect' : 'Correct'}
+
+
+.span11
   .form-actions
     = link_to 'Edit', edit_quiz_path(@quiz), :class => 'btn btn-primary'
     = link_to 'Back', quizzes_path, :class => 'btn'
