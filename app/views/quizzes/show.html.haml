@@ -55,7 +55,7 @@
           %td
             =x.cell_number
           %td
-            -QuizQuestion.find_all_by_quiz_id(@quiz.id).each do |question|
+            -QuizQuestion.find_all_by_quiz_id(x.quiz_id).each do |question|
               =question.question
               %br
               -QuizEntryAnswer.find_all_by_quiz_question_id(question.id).each do |answer|
