@@ -17,9 +17,7 @@
       %p
         %b Enabled:
         = @quiz.enabled
-      %p
-        %b Move to next Question on Incorrect Answer:
-        = @quiz.next_on_incorrect
+
     .span6
       .well
         %h3.text-info Questions (# #{@quiz.quiz_questions.count()})
