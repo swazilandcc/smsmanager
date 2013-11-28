@@ -56,8 +56,7 @@ class IncomingMessagesController < ApplicationController
 
       if @check_if_quiz.nil? == false && @check_if_competition.nil? == true
 
-        QuizSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your quiz response has been successfully received. Thank you!')
-
+        QuizWorker.perform_async(sender, keyword, option, extra_text, 'Your quiz response has been successfully received. Thank you!')
 
       end
 

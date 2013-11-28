@@ -1,5 +1,4 @@
-class QuizSmsWorker
-  require 'net/http'
+class QuizWorker
   include Sidekiq::Worker
 
   def perform(sender, keyword, option, extra_text, message_to_send)
