@@ -253,7 +253,7 @@ class IncomingSmsWorker
       @send_response.sender = "7070"
       @send_response.receiver = sender
 
-      @sms_quiz = Quiz.where(:keyword => keyword.to_s.strip.upcase).first
+      @sms_quiz = Quiz.find_by_keyword(keyword.to_s.strip.upcase)
 
       if @sms_quiz.nil? == false
 
