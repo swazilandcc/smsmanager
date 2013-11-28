@@ -58,14 +58,17 @@
             -QuizQuestion.find_all_by_quiz_id(@quiz.id).each do |question|
               =question.question
               %br
-              %b Answer: #{QuizQuestionAnswer.find_by_quiz_question_id(question.id).letter}). #{QuizQuestionAnswer.find_by_quiz_question_id(question.id).answer}
-              -answer_is_correct = question.quiz_question_answers.where("letter = '#{QuizQuestionAnswer.find_by_quiz_question_id(question.id).letter}' AND correct_answer = 1")
+              -received_answer = QuizQuestionAnswer.find(QuizEntryAnswer.find_by_quiz_entry_id_and_quiz_question_answer_id(x.id, question.id).quiz_question_answer_id)
+              %b Answer: #{received_answer.letter}). #{received_answer.answer}
+              -correct_answer = QuizQuestionAnswer.find_by_quiz_question_id_and_correct_answer(question.id, 1).letter
+
               %br
-              -if answer_is_correct.nil? == false
+              -if received_answer.letter == correct_answer
                 -@color = 'green'
               -else
                 -@color = 'red'
-              %b{:style => "color: #{@color};"} This answer is #{answer_is_correct.nil? ? 'Incorrect' : 'Correct'}
+              %b{:style => "color: #{@color};"} This answer is #{received_answer.letter == correct_answer ? 'Correct' : 'Incorrect'}
+
               %br
               %br
 
