@@ -51,10 +51,23 @@ class IncomingMessagesController < ApplicationController
 
     else
 
-      IncomingSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your message has been successfully received. Thank you!')
+      @check_if_quiz = Quiz.find_by_keyword(keyword.to_s.strip.upcase)
+      @check_if_competition = Competition.find_by_keyword(keyword.to_s.strip.upcase)
+
+      if @check_if_quiz.nil? == false && @check_if_competition.nil? == true
+
+        QuizSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your quiz response has been successfully received. Thank you!')
+
+
+      end
+
+      if @check_if_competition.nil? == false && @check_if_quiz.nil? == true
+
+        IncomingSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your message has been successfully received. Thank you!')
+
+      end
 
     end
-
 
     render text: "OK"
 
