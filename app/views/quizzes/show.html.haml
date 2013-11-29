@@ -17,6 +17,9 @@
       %p
         %b Enabled:
         = @quiz.enabled
+      %p
+        %b Total Possible Score:
+        = @quiz.total_score
 
     .span6
       .well
@@ -48,26 +51,45 @@
     %thead
       %tr
         %th Cell Number
-        %th Question & Answers
+        %th Total Score
     %tbody
       -QuizEntry.find_all_by_quiz_id(@quiz.id).each do |x|
         %tr
           %td
-            =x.cell_number
+            %a{"data-toggle" => "modal", href: "##{x.id}"} #{x.cell_number}
+            %div.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "#{x.id}Label", :id => "#{x.id}", role: "dialog", tabindex: "-1"}
+              .modal-header
+                %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", type: "button"} ×
+                %h3
+                  %div{:id => "#{x.id}Label"} Quiz Entry Details
+              .modal-body
+                %table.table.table-bordered.table-condensed.table-stripped
+                  %thead
+                    %tr
+                      %th Quiz Entries
+                  %tbody
+                    %tr
+                      %td
+                        -QuizQuestion.find_all_by_quiz_id(x.quiz_id).each do |question|
+                          =question.question
+                          %br
+                          -QuizEntryAnswer.find_all_by_quiz_question_id_and_quiz_entry_id(question.id, x.id).each do |answer|
+                            -received_answer = QuizQuestionAnswer.find(answer.quiz_question_answer_id)
+                            %b Answer: #{received_answer.letter}). #{received_answer.answer}
+                            %br
+                            -correct_answer = QuizQuestionAnswer.find_by_quiz_question_id_and_correct_answer(question.id, 1)
+                            %b Is this answer correct? #{correct_answer.letter == received_answer.letter}
+                            -@total_score = 0
+                            -if correct_answer.letter == received_answer.letter
+                              -@total_score += correct_answer.score.to_i
+                            %br
+                          %br
+                          %br
+              .modal-footer
+                %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+        %tr{:class => 'success'}
           %td
-            -QuizQuestion.find_all_by_quiz_id(x.quiz_id).each do |question|
-              =question.question
-              %br
-              -QuizEntryAnswer.find_all_by_quiz_question_id_and_quiz_entry_id(question.id, x.id).each do |answer|
-                -received_answer = QuizQuestionAnswer.find(answer.quiz_question_answer_id)
-                %b Answer: #{received_answer.letter}). #{received_answer.answer}
-                %br
-                -correct_answer = QuizQuestionAnswer.find_by_quiz_question_id_and_correct_answer(question.id, 1)
-                %b Is this answer correct? #{correct_answer.letter == received_answer.letter}
-                %br
-              %br
-              %br
-
+            %b #{@total_score} out of #{@quiz.total_score}
 
 .span11
   .form-actions

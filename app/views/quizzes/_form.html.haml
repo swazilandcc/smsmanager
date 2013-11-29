@@ -14,6 +14,7 @@
         = f.input :incorrect_answer, :input_html => {:cols => 6, :rows => 3}
         = f.input :next_on_incorrect, :label => 'Move to Next Question on Incorrect Answer (Recommended)', :input_html => {:checked => true}, :as => :hidden
         = f.input :enabled
+        = f.input :total_score, :label => "Sum of all correct answers"
 
   .span9.well
     %hr

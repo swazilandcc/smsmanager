@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131127180959) do
+ActiveRecord::Schema.define(:version => 20131129185503) do
 
   create_table "bulk_message_templates", :force => true do |t|
     t.string   "name"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(:version => 20131127180959) do
     t.boolean  "correct_answer"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.integer  "score"
   end
 
   add_index "quiz_question_answers", ["quiz_question_id"], :name => "index_quiz_question_answers_on_quiz_question_id"
@@ -137,6 +138,7 @@ ActiveRecord::Schema.define(:version => 20131127180959) do
     t.boolean  "next_on_incorrect"
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
+    t.integer  "total_score"
   end
 
   create_table "regions", :force => true do |t|

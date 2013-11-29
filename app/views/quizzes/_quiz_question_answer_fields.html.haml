@@ -4,7 +4,8 @@
       %tr
         %th Letter
         %th Answer
-        %th Correct Answer for Question (Only One per Question)
+        %th Correct Answer (Only One per Question)
+        %th Score (Enter value only if this is the correct answer)
         %th
     %tbody
       %tr
@@ -14,6 +15,8 @@
           =f.input :answer, :input_html => {:cols => 3, :rows => 2}, :label => false
         %td
           =f.input :correct_answer, :label => false
+        %td
+          =f.input :score
         %td
           = f.hidden_field :_destroy
           = link_to "Remove", '#', class: "btn btn-small btn-danger remove_fields"

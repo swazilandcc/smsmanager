@@ -22,8 +22,7 @@
         %td= quiz.enabled
         %td= link_to 'Show', quiz, :class => 'btn'
         %td= link_to 'Edit', edit_quiz_path(quiz), :class => 'btn btn-primary'
-        %td= link_to 'Destroy', quiz, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
+        %td= link_to 'Delete', quiz, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => 'btn btn-danger'
 
 %br
-
 = link_to 'New Quiz', new_quiz_path, :class => 'btn btn-successful'
