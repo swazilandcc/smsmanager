@@ -31,8 +31,11 @@
                 Question
               %th
                 Answers
+              %th
+                SMS Length (Must be 160 or less)
           %tbody
             -@quiz.quiz_questions.all().each do |question|
+              -@total_answer_length = 0
               %tr
                 %td
                   =question.question
@@ -41,10 +44,20 @@
                     -if answer.correct_answer == true
                       %div{:style => 'color: green; background-color: white'}
                         %b #{answer.letter}. #{answer.answer}
+                        -@total_answer_length += answer.letter.to_s.length + answer.answer.to_s.length + 2
                         %br
                     -else
                       #{answer.letter}. #{answer.answer}
+                      -@total_answer_length += answer.letter.to_s.length + answer.answer.to_s.length + 2
                       %br
+
+                %td
+                  -@question_characters = question.question.to_s.length
+                  -@total_length = @question_characters.to_i + @total_answer_length
+                  %div{:style => "color: #{@total_length <= 160 ? 'green' : 'red'}"}
+                    #{@total_length} Characters
+
+
 .span11.well
   %h3.text-info Quiz Entries
   %table.table.table-bordered.table-condensed.table-stripped
