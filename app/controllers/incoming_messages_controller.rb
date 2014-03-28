@@ -62,11 +62,13 @@ class IncomingMessagesController < ApplicationController
 
         SmsQuizWorker.perform_async(sender, keyword, option, extra_text, 'Your quiz response has been successfully received. Thank you!')
 
-      end
-
-      if @check_if_competition.nil? == false && @check_if_quiz.nil? == true
+     elsif @check_if_competition.nil? == false && @check_if_quiz.nil? == true
 
         IncomingSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your message has been successfully received. Thank you!')
+
+     else
+
+       IncomingSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your messages has been received with thanks and will be considered. Thank you for supporting our TV and Radio Ministry Programs. God bless you. Mt 28:19-20')
 
       end
 
