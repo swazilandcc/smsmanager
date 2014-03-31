@@ -68,7 +68,7 @@ class IncomingMessagesController < ApplicationController
 
      else
 
-       IncomingSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your messages has been received with thanks and will be considered. Thank you for supporting our TV and Radio Ministry Programs. God bless you. Mt 28:19-20')
+       IncomingSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your message has been received with thanks and will be considered. Thank you for supporting our TV and Radio Ministry Programs. God bless you. Mt 28:19-20')
 
       end
 
