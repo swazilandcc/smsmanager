@@ -13,7 +13,6 @@ class IncomingSmsWorker
       @incoming_message.option = option
       @incoming_message.extra_text = extra_text
 
-
       # Prepare Response
       @send_response = SendSMS.new
       @send_response.momt = "MT"
@@ -39,7 +38,6 @@ class IncomingSmsWorker
               @rndString = "#".to_s + (0...5).map{ o[rand(o.length)] }.join.to_s
             end
 
-
             # The Sender Has the right competition keyword and the option is right
             @incoming_message.matched_to_competition = true
             @incoming_message.matched_to_quiz = false
@@ -49,7 +47,33 @@ class IncomingSmsWorker
 
             if @incoming_message.save!
 
-              @send_response.msgdata = @competition.success_message.to_s + @rndString.to_s
+              @message_to_send = ""
+
+              if @competition.send_special_message.nil? == false
+
+                if @competition.send_special_message == true
+
+                  sms_count = IncomingMessage.find_all_by_sender_and_keyword(sender, keyword.to_s.strip.upcase).count
+
+                  if @competition.special_message_incoming_count == sms_count
+
+                    @message_to_send = @competition.special_message_content
+
+                  else
+
+                    @message_to_send = @competition.success_message.to_s + @rndString.to_s
+
+                  end
+
+                end
+
+              else
+
+                @message_to_send = @competition.success_message.to_s + @rndString.to_s
+
+              end
+
+              @send_response.msgdata = @message_to_send
               @send_response.sms_type = 2
 
               if @send_response.save!
@@ -83,8 +107,35 @@ class IncomingSmsWorker
 
             if @incoming_message.save!
 
+              @message_to_send = ""
 
-              @send_response.msgdata = @competition.success_message.to_s + @rndString.to_s
+              if @competition.send_special_message.nil? == false
+
+                if @competition.send_special_message == true
+
+                  sms_count = IncomingMessage.find_all_by_sender_and_keyword(sender, keyword.to_s.strip.upcase).count
+
+                  if @competition.special_message_incoming_count == sms_count
+
+                    @message_to_send = @competition.special_message_content
+
+                  else
+
+                    @message_to_send = @competition.success_message.to_s + @rndString.to_s
+
+                  end
+
+                end
+
+              else
+
+                @message_to_send = @competition.success_message.to_s + @rndString.to_s
+
+
+              end
+
+
+              @send_response.msgdata = @message_to_send
               @send_response.sms_type = 2
 
               if @send_response.save!

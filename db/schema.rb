@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131129185503) do
+ActiveRecord::Schema.define(:version => 20140522092337) do
 
   create_table "bulk_message_templates", :force => true do |t|
     t.string   "name"
@@ -41,8 +41,11 @@ ActiveRecord::Schema.define(:version => 20131129185503) do
     t.boolean  "active"
     t.string   "incorrect_option_message"
     t.boolean  "response_include_serial"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
+    t.boolean  "send_special_message"
+    t.integer  "special_message_incoming_count"
+    t.text     "special_message_content"
   end
 
   create_table "contacts", :force => true do |t|

@@ -29,6 +29,11 @@
   .span11.well
     = f.input :active, :label => 'Competition is Active'
 
+  .span11.well
+    = f.input :send_special_message, :as => :boolean, :label => "Enable special thank you message"
+    = f.input :special_message_incoming_count, :label => "Number of SMS needed before sending special thank you message"
+    = f.input :special_message_content, :as => :text, :input_html => {:cols => 3, :rows => 3}, :label => "Special thank you message"
+
   .span11
     .form-actions
       = f.button :submit, :class => 'btn btn-success'
