@@ -63,6 +63,12 @@
           %td
             = @competition.response_include_serial? ? 'Yes' : 'No'
 
+        %tr
+          %td
+            %b Special Message Target
+          %td
+            = @competition.special_message_incoming_count
+
       %br
       -if @competition.competition_options.nil? == false
         %h4 Competition Option
@@ -96,7 +102,10 @@
                 = link_to "Import Contact", "/dashboard/import_contact/#{sender.to_s[4..-1]}", :class => 'btn btn-small btn-success', :id => "#{sender.to_s[4..-1]}", :remote => true
               -else
                 = link_to "#{@contact.complete_name}", '#'
-            %td=count
+            %td
+              =count
+              -if count >= @competition.special_message_incoming_count
+                %b{:style => 'color: blue'} ( Special Message Target Achieved )
 
       -@competition.competition_options.exists? == true
       %h4.text-info Competition Option Entries
