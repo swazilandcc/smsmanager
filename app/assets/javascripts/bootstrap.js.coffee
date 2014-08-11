@@ -85,11 +85,13 @@ jQuery ->
           (data) ->
             rptTable = "<h4>Incoming SMS Report For Date From <b>" + dateFromQry + "</b> To <b>" + dateToQry + "</b><br /><br />"
             rptTable = "<a href='/dashboard/downloadIncomingSMSReport?dateFrom=" + dateFromQry + "&dateTo=" + dateToQry + "' class='btn btn-info'>Export to Excel</a><br /><br />"
-            rptTable += "<table class='table table-bordered'><thead><tr><th>Cell Number</th><th>Keyword</th><th>Send Date & Time</th></tr></thead><tbody>"
+            rptTable += "<table class='table table-bordered'><thead><tr><th>Cell Number</th><th>Keyword</th><th>Option</th><th>ExtraText</th><th>Send Date & Time</th></tr></thead><tbody>"
             while i < data.results.length
               rptTable += "<tr>"
               rptTable += "<td>" + data.results[i].cell_number + "</td>"
               rptTable += "<td>" + data.results[i].keyword + "</td>"
+              rptTable += "<td>" + data.results[i].option + "</td>"
+              rptTable += "<td>" + data.results[i].extra_text + "</td>"
               rptTable += "<td>" + data.results[i].send_date + "</td>"
               rptTable += "</tr>"
               i++
