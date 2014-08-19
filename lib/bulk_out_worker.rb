@@ -25,8 +25,6 @@ class BulkOutWorker
         if @send_response.save!
 
           @sms_log.status = "Sent"
-          bulk_send.status = "Sent"
-          bulk_send.save!
 
         end
 
