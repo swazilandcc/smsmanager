@@ -128,8 +128,9 @@
                 = link_to "#{@contact.complete_name}", '#'
             %td
               =count
-              -if count >= @competition.special_message_incoming_count
-                %b{:style => 'color: blue'} ( Special Message Target Achieved )
+              -if count.nil? == false && @competition.special_message_incoming_count.nil? == false
+                -if count >= @competition.special_message_incoming_count
+                  %b{:style => 'color: blue'} ( Special Message Target Achieved )
 
       -@competition.competition_options.exists? == true
       %h4.text-info Competition Option Entries
