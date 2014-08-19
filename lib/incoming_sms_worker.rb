@@ -23,7 +23,7 @@ class IncomingSmsWorker
 
       if @competition.nil? == false
 
-        if @competition.active? == true && (@competition.start_date.strftime("%Y-%m-%d") >= Time.now.strftime("%Y-%m-%d") && @competition.end_date.strftime("%Y-%m-%d") <= Time.now.strftime("%Y-%m-%d"))
+        if @competition.active? == true && (Time.now.strftime("%Y-%m-%d") >= @competition.start_date.strftime("%Y-%m-%d") && Time.now.strftime("%Y-%m-%d") <= @competition.end_date.strftime("%Y-%m-%d"))
 
           # We have found a matching keyword from the senders text
 
