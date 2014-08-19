@@ -19,6 +19,9 @@ Smsmanager::Application.routes.draw do
 
   resources :sms_logs
 
+
+  post '/send_bulk_sms' => "send_bulk_messages#send_bulk_out"
+
   match '/dashboard/import_contact/:cell_number' => 'dashboard#import_contact'
   match '/dashboard/bulksms_report' => 'dashboard#bulksms_report'
   match '/dashboard/incomingsms_report' => 'dashboard#incomingsms_report'

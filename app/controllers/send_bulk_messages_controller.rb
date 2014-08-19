@@ -38,6 +38,40 @@ class SendBulkMessagesController < ApplicationController
     @send_bulk_message = SendBulkMessage.find(params[:id])
   end
 
+  def send_bulk_out
+
+    @message = ""
+
+    begin
+
+      @sms_number = IncomingMessage.all(:select => "sender, competition_id", :conditions => "competition_id = #{params[:competition_id]}", :group => "sender") rescue nil
+      @send_list = []
+
+      @sms_number.each do |x|
+        @send_list << x.sender
+      end
+
+      if params[:message].nil? == false
+        BulkOutWorker.perform_async(@send_list, params[:message], current_user.id)
+      end
+
+      @message = "Bulk SMS was dispatched for delivery successfully!"
+
+    rescue
+
+      @message = "There was an error sending Bulk Message, Please contact system administrator"
+
+    end
+
+
+    respond_to do |format|
+
+      format.js { render js: "alert('#{@message}'); location.reload;"}
+
+    end
+
+  end
+
   # POST /send_bulk_messages
   # POST /send_bulk_messages.json
   def create

@@ -85,6 +85,30 @@
 
     #entries.tab-pane
       %h4.text-info Competition Entries
+      .well
+        %a.btn{"data-toggle" => "modal", :href => "#myModal", :role => "button", :class => "btn"} Send Bulk Message
+
+        #myModal.modal.hide.fade{"aria-hidden" => "true", "aria-labelledby" => "myModalLabel", :role => "dialog", :tabindex => "-1"}
+          .modal-header
+            %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+            %h3#myModalLabel Send Bulk Message to All Senders
+          .modal-body
+            -send_to = []
+            -IncomingMessage.all(:conditions => "competition_id = #{@competition.id}", :group => "sender").each do |x|
+              -send_to << x.sender
+            Total Number of Cell Numbers to Send to:
+            %b
+              =send_to.count
+            %hr
+            = form_tag "/send_bulk_sms", method: "post", :remote => true do
+              = label_tag(:message, "Message (160 Characters):")
+              = hidden_field_tag :competition_id, @competition.id
+              = text_area_tag :message, nil, :id => "styled", :maxlength => "160"
+              %br
+              = submit_tag "Send Bulk Message", :class => "btn btn-success btn-small"
+          .modal-footer
+            %button.btn{"aria-hidden" => "true", "data-dismiss" => "modal"} Close
+
       %table.table.table-bordered.table-condensed.table-stripped
         %thead
           %tr
@@ -124,6 +148,7 @@
               =x.option_name
             %td
               =IncomingMessage.all(:conditions => "competition_id = #{@competition.id} AND `option` = #{x.option_number} ").count()
+
 
 
     -##winners.tab-pane

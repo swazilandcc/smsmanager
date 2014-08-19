@@ -29,3 +29,18 @@
 
 }
 
+textarea {
+    resize: none;
+}
+
+textarea#styled {
+    width: 500px;
+    height: 120px;
+    border: 3px solid #cccccc;
+    padding: 5px;
+    font-family: Tahoma, sans-serif;
+    background-image: url(bg.gif);
+    background-position: bottom right;
+    background-repeat: no-repeat;
+}
+
