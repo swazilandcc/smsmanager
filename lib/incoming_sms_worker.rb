@@ -62,7 +62,7 @@ class IncomingSmsWorker
                   if @competition.send_special_message == true
                     sms_count = IncomingMessage.find_all_by_sender_and_keyword(sender, keyword.to_s.strip.upcase).count
 
-                    if @competition.special_message_incoming_count == sms_count
+                    if @competition.special_message_incoming_count.to_i == sms_count
 
                       @message_to_send = @competition.special_message_content
 
