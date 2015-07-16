@@ -1,6 +1,6 @@
 set_default(:mysql_host, "localhost")
 set_default(:mysql_user, "root")
-set_default(:mysql_root_password, "P5ssw0rd180105")
+set_default(:mysql_root_password, "P5ssw0rd")
 set_default(:mysql_password) { Capistrano::CLI.password_prompt "Enter password: " }
 set_default(:mysql_database) { "#{application}_production" }
 

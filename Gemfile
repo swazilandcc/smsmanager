@@ -17,9 +17,9 @@ gem 'ransack'
 gem 'net-ping'
 gem 'twitter-bootstrap-rails'
 gem 'whenever'
-gem 'sidekiq'
+gem 'sidekiq', '2.7.4'
 gem 'chosen-rails'
-gem 'sinatra', require: false
+gem 'sinatra',  '1.3.6', require: false
 gem 'slim'
 gem 'cancan'
 
