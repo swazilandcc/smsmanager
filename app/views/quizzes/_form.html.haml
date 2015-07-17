@@ -8,6 +8,7 @@
     .form-inputs
       .span5
         = f.input :keyword
+        = f.input :short_code, :as => :select, :collection => ["7070", "5020"], :prompt => "Please select a shortcode"
         = f.input :welcome_message, :input_html => {:cols => 6, :rows => 3}
         = f.input :correct_answer, :input_html => {:cols => 6, :rows => 3}
       .span4
