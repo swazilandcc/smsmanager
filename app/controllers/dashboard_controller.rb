@@ -190,7 +190,7 @@ class DashboardController < ApplicationController
 
         @sms_report.each do |sms|
 
-          @results_fixed << {cell_number: "#{sms.sender}", send_date: "#{sms.reply_sent_date_time.strftime("%d-%m-%Y %H:%I")}", keyword: "#{sms.keyword}", option: "#{sms.option}", extra_text: "#{sms.extra_text}"}
+          @results_fixed << {cell_number: "#{sms.sender}", send_date: "#{sms.reply_sent_date_time.strftime("%d-%m-%Y %H:%I")}", keyword: "#{sms.keyword}", option: "#{sms.option}", extra_text: "#{sms.extra_text}", short_code: "#{sms.short_code}"}
 
         end
 

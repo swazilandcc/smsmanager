@@ -12,6 +12,7 @@ class SmsQuizWorker
       @incoming_message.keyword = keyword
       @incoming_message.option = option
       @incoming_message.extra_text = extra_text
+      @incoming_message.short_code = short_code
 
       # Prepare Response
       @send_response = SendSMS.new

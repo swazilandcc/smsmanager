@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140522092337) do
+ActiveRecord::Schema.define(:version => 20150731160813) do
 
   create_table "bulk_message_templates", :force => true do |t|
     t.string   "name"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(:version => 20140522092337) do
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
     t.boolean  "matched_to_quiz"
+    t.string   "short_code"
   end
 
   create_table "quiz_entries", :force => true do |t|
@@ -142,6 +143,7 @@ ActiveRecord::Schema.define(:version => 20140522092337) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
     t.integer  "total_score"
+    t.string   "short_code"
   end
 
   create_table "regions", :force => true do |t|
