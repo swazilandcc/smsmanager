@@ -47,11 +47,11 @@ class IncomingMessagesController < ApplicationController
     keyword = params[:keyword] rescue nil
     option = params[:option] rescue nil
     extra_text = params[:extra_text] rescue nil
+    short_code = params[:short_code] rescue nil
 
     if keyword.downcase == "vod"
 
-      DailyVerseWorker.perform_async(sender, keyword, option, extra_text, 'Your message has been successfully received. Thank you!')
-
+      DailyVerseWorker.perform_async(sender, keyword, option, extra_text, 'Your message has been successfully received. Thank you!', short_code)
 
     else
 
@@ -60,15 +60,15 @@ class IncomingMessagesController < ApplicationController
 
       if @check_if_quiz.nil? == false && @check_if_competition.nil? == true
 
-        SmsQuizWorker.perform_async(sender, keyword, option, extra_text, 'Your quiz response has been successfully received. Thank you!')
+        SmsQuizWorker.perform_async(sender, keyword, option, extra_text, 'Your quiz response has been successfully received. Thank you!', short_code)
 
      elsif @check_if_competition.nil? == false && @check_if_quiz.nil? == true
 
-        IncomingSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your message has been successfully received. Thank you!')
+        IncomingSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your message has been successfully received. Thank you!', short_code)
 
      else
 
-       IncomingSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your message has been received with thanks and will be considered. Thank you for supporting our TV and Radio Ministry Programs. God bless you. Mt 28:19-20')
+       IncomingSmsWorker.perform_async(sender, keyword, option, extra_text, 'Your message has been received with thanks and will be considered. Thank you for supporting our TV and Radio Ministry Programs. God bless you. Mt 28:19-20', short_code)
 
       end
 

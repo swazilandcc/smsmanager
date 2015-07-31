@@ -2,7 +2,7 @@ class IncomingSmsWorker
   require 'net/http'
   include Sidekiq::Worker
 
-  def perform(sender, keyword, option, extra_text, message_to_send)
+  def perform(sender, keyword, option, extra_text, message_to_send, short_code)
 
     ## Make sure the sender is not empty
     if sender.nil? == false
@@ -17,7 +17,7 @@ class IncomingSmsWorker
       # Prepare Response
       @send_response = SendSMS.new
       @send_response.momt = "MT"
-      @send_response.sender = "7070"
+      @send_response.sender = short_code
       @send_response.receiver = sender
 
       @competition = Competition.where(:keyword => keyword.to_s.strip.upcase).first rescue nil

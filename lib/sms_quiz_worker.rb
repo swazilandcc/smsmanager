@@ -1,7 +1,7 @@
 class SmsQuizWorker
   include Sidekiq::Worker
 
-  def perform(sender, keyword, option, extra_text, message_to_send)
+  def perform(sender, keyword, option, extra_text, message_to_send, short_code)
 
 
     if sender.nil? == false
@@ -16,7 +16,7 @@ class SmsQuizWorker
       # Prepare Response
       @send_response = SendSMS.new
       @send_response.momt = "MT"
-      @send_response.sender = "7070"
+      @send_response.sender = short_code
       @send_response.receiver = sender
 
       @sms_quiz = Quiz.find_by_keyword(keyword.to_s.strip.upcase)
@@ -49,7 +49,7 @@ class SmsQuizWorker
 
               @send_response = SendSMS.new
               @send_response.momt = "MT"
-              @send_response.sender = "7070"
+              @send_response.sender = short_code
               @send_response.receiver = sender
 
               #compose Question and Answers
@@ -118,7 +118,7 @@ class SmsQuizWorker
 
                       @send_response = SendSMS.new
                       @send_response.momt = "MT"
-                      @send_response.sender = "7070"
+                      @send_response.sender = short_code
                       @send_response.receiver = sender
 
                       #compose Question and Answers
@@ -146,7 +146,7 @@ class SmsQuizWorker
                       # Send SMS Quiz and Answers
                       @send_response = SendSMS.new
                       @send_response.momt = "MT"
-                      @send_response.sender = "7070"
+                      @send_response.sender = short_code
                       @send_response.receiver = sender
                       @send_response.msgdata = "You have reached the end of this quiz. Thank you for participating."
                       @send_response.sms_type = 2
@@ -199,7 +199,7 @@ class SmsQuizWorker
 
                       @send_response = SendSMS.new
                       @send_response.momt = "MT"
-                      @send_response.sender = "7070"
+                      @send_response.sender = short_code
                       @send_response.receiver = sender
 
                       #compose Question and Answers
@@ -227,7 +227,7 @@ class SmsQuizWorker
                       # Send SMS Quiz and Answers
                       @send_response = SendSMS.new
                       @send_response.momt = "MT"
-                      @send_response.sender = "7070"
+                      @send_response.sender = short_code
                       @send_response.receiver = sender
                       @send_response.msgdata = "You have reached the end of this quiz. Thank you for participating."
                       @send_response.sms_type = 2
