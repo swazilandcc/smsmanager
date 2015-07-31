@@ -151,10 +151,10 @@ class DashboardController < ApplicationController
 
           csv_string = CSV.generate do |csv|
             # header row
-            csv << ["cell_number", "keyword", "option", "extra_text" "send_date"]
+            csv << ["cell_number", "keyword", "option", "short_code", "extra_text" "send_date"]
             # data rows
             @sms_report.each do |sms|
-              csv << [sms.sender, sms.keyword, sms.option, sms.extra_text, sms.reply_sent_date_time.strftime("%d-%m-%Y %H:%M")]
+              csv << [sms.sender, sms.keyword, sms.option, sms.short_code, sms.extra_text, sms.reply_sent_date_time.strftime("%d-%m-%Y %H:%M")]
             end
           end
 
